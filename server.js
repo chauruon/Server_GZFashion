@@ -3,18 +3,17 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import * as dotenv from 'dotenv';
+import moment from "moment";
+import UserRoute from "./src/routes/UserRoute.js";
+import path from "path";
 dotenv.config();
 const app = express();
-import UserRoute from "./src/routes/UserRoute.js";
 
 app.use(express.json());
 app.use(bodyParser.json({limit:"30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 app.use(cors());
-
-
-app.use("/api",UserRoute);
-
+app.use(express.static(path.join("public")));
 
 mongoose.connect(process.env.CONNECTION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   app.listen(process.env.PORT, ()=> 
@@ -31,3 +30,6 @@ mongoose.connect(process.env.CONNECTION_URI,{useNewUrlParser: true, useUnifiedTo
  */
 
 // USER
+// app.use("/api",UserRoute);
+app.use(`${process.env.API}`,UserRoute);
+
