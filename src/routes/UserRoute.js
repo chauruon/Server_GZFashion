@@ -4,6 +4,9 @@ import {
   LoginUser,
   UpdateUser,
 } from "../controllers/UserController/User.js";
+import {
+  NewProducts,
+} from "../controllers/ProductController/Products.js";
 import storage from "../middleware/storageImage.js";
 import multer from "multer";
 
@@ -26,6 +29,6 @@ router.put(`/update_user`,upload.single('avatar'), UpdateUser);
 /**
  * Products
  */
-// router.post(`/new_product`,upload.array('avatar'), UpdateUser);
+router.post(`/new_product`,upload.array('banner',5),NewProducts);
 
 export default router
