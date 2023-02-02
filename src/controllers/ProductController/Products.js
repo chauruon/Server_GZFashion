@@ -23,8 +23,7 @@ export const NewProducts = async (req, res) => {
       typeCategories: req.body.typeCategories,
     });
 
-    const newSave = await newProducts.save();
-    console.log('newSave: ', newSave);
+    await newProducts.save();
     if (!res.status(201)) {
       console.log(`Save New Products error`);
     }else
