@@ -15,14 +15,36 @@ app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 app.use(cors());
 app.use(express.static(path.join("public")));
 
-mongoose.connect(process.env.CONNECTION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
+
+// var Mongoose = mongoose.Mongoose;
+// console.log('Mongoose: ', Mongoose);
+
+
+// var instance2 = new Mongoose();
+// instance2.connect('test');
+// console.log('instance1: ', instance1);
+// console.log('instance2: ', instance2);
+
+
+mongoose.connect(process.env.BD_PRODUCTION,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   app.listen(process.env.PORT, ()=> 
     console.log(`Server đang chạy port: ${process.env.PORT}`)
   )
-  ).catch((error)=> 
+).catch((error)=> 
   console.log(error.message)
 );
 
+
+mongoose.connect(process.env.BD_PRODUCTION,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
+  // app.listen(process.env.PORT, ()=> 
+    console.log(`Server đang chạy port: ${process.env.PORT}`)
+  // )
+).catch((error)=> 
+  console.log(error.message)
+);
+
+// var instance1 = new Mongoose();
+// instance1.connect(d'Production');
 /**
  * Router
  * example
