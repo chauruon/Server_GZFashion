@@ -14,7 +14,7 @@ export const NewProducts = async (req, res) => {
   try {
     const fullUrl = req.files.map((ele, idx) => {
       const url = "/images/" + ele.filename;
-      return "/images/" + ele.filename;
+      return "/banner_product/" + ele.filename;
     });
 
     const newProducts = await ProductModel({
@@ -28,7 +28,7 @@ export const NewProducts = async (req, res) => {
     await newProducts.save();
     if (!res.status(201)) {
       console.log(`Save New Products error`);
-    } else res.status(201).json(newSave);
+    } else res.status(201).json(newProducts);
   } catch (e) {
     console.log("e: ", e);
     res.status(409).json({ message: e.message });

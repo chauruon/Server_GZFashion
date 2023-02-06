@@ -2,11 +2,11 @@ import mongoose, { Schema, SchemaTypes } from "mongoose";
 import moment from "moment";
 const CurrentDate = moment().unix();
 
-const Ads = mongoose.Schema({
+const BannerNotify = mongoose.Schema({
   banner: {
     type: SchemaTypes.Array,
     require: true,
   },
 });
-const AdsModel = mongoose.model("Ads", Ads);
-export default AdsModel;
+const BannerNotifyModel = mongoose.model("banner_notify", BannerNotify);
+export default BannerNotifyModel;

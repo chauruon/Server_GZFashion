@@ -16,29 +16,10 @@ app.use(cors());
 app.use(express.static(path.join("public")));
 
 
-// var Mongoose = mongoose.Mongoose;
-// console.log('Mongoose: ', Mongoose);
-
-
-// var instance2 = new Mongoose();
-// instance2.connect('test');
-// console.log('instance1: ', instance1);
-// console.log('instance2: ', instance2);
-
-
-mongoose.connect(process.env.BD_PRODUCTION,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
+mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   app.listen(process.env.PORT, ()=> 
     console.log(`Server đang chạy port: ${process.env.PORT}`)
   )
-).catch((error)=> 
-  console.log(error.message)
-);
-
-
-mongoose.connect(process.env.BD_PRODUCTION,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
-  // app.listen(process.env.PORT, ()=> 
-    console.log(`Server đang chạy port: ${process.env.PORT}`)
-  // )
 ).catch((error)=> 
   console.log(error.message)
 );

@@ -14,7 +14,7 @@ import {
   bannerProduct,
 } from "../middleware/storageImage.js";
 import multer from "multer";
-import { UploadBannerNotify } from "../controllers/BannerADS/ADS.js";
+import { GetBannerNotify, UploadBannerNotify } from "../controllers/BannerNotify/Notify.js";
 
 const router = express.Router();
 
@@ -41,5 +41,7 @@ router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
 
 
-router.post(`/banner_notify`,banner_notify.single('image'),UploadBannerNotify)
+router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify)
+router.get(`/banner_notify`,GetBannerNotify)
+
 export default router

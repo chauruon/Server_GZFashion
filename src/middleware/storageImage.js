@@ -2,7 +2,7 @@ import multer from "multer";
 
 export const bannerProduct = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/bannerProduct')
+    cb(null, 'public/banner_product')
   },
   filename: function (req, file, cb) {
     const typeFile = file.mimetype.split("/");
@@ -14,7 +14,7 @@ export const bannerProduct = multer.diskStorage({
 
 export const bannerNotify = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/bannerNotify')
+    cb(null, 'public/banner_notify')
   },
   filename: function (req, file, cb) {
     const typeFile = file.mimetype.split("/");
