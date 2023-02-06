@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 app.use(cors());
 app.use(express.static(path.join("public")));
 
+app.use(`${process.env.API}`,UserRoute);
 
 mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   app.listen(process.env.PORT, ()=> 
@@ -24,15 +25,4 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
   console.log(error.message)
 );
 
-// var instance1 = new Mongoose();
-// instance1.connect(d'Production');
-/**
- * Router
- * example
- * https://localhost:8700/api/v1
- */
-
-// USER
-// app.use("/api",UserRoute);
-app.use(`${process.env.API}`,UserRoute);
 
