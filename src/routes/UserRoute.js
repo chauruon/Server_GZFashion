@@ -15,10 +15,9 @@ import {
 } from "../middleware/storageImage.js";
 import multer from "multer";
 import { GetBannerNotify, UploadBannerNotify } from "../controllers/BannerNotify/Notify.js";
+import { NewCategories } from "../controllers/CategoriesController/Categories.js";
 
 const router = express.Router();
-
-
 
 const avatar = multer({ storage: avatarStorage });
 const banner_notify = multer({ storage: bannerNotify });
@@ -31,17 +30,18 @@ router.post(`/register`, RegisterUser);
 router.post(`/login`, LoginUser);
 router.put(`/update_user`,avatar.single('avatar'), UpdateUser);
 
-
-
-
 /**
  * Products
  */
 router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
 
-
+// Banner
 router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify)
 router.get(`/banner_notify`,GetBannerNotify)
+
+// Categories
+router.post("/new_categories", NewCategories)
+// router.get("/categories", GetCategories)
 
 export default router
