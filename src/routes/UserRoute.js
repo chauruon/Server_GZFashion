@@ -5,6 +5,7 @@ import {
   UpdateUser,
 } from "../controllers/UserController/User.js";
 import {
+  GetAllProducsts,
   GetDetadilProducsts,
   NewProducts,
 } from "../controllers/ProductController/Products.js";
@@ -15,7 +16,7 @@ import {
 } from "../middleware/storageImage.js";
 import multer from "multer";
 import { GetBannerNotify, UploadBannerNotify } from "../controllers/BannerNotify/Notify.js";
-import { NewCategories, UpNewCategories } from "../controllers/CategoriesController/Categories.js";
+import { GetCategories, NewCategories, UpNewCategories } from "../controllers/CategoriesController/Categories.js";
 
 const router = express.Router();
 
@@ -35,7 +36,7 @@ router.put(`/update_user`,avatar.single('avatar'), UpdateUser);
  */
 router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
-
+router.get(`/products`,GetAllProducsts)
 // Banner
 router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify)
 router.get(`/banner_notify`,GetBannerNotify)
@@ -43,7 +44,6 @@ router.get(`/banner_notify`,GetBannerNotify)
 // Categories
 router.post("/new_update_categories", UpNewCategories);
 router.post("/new_categories", NewCategories);
-
-// router.get("/categories", GetCategories)
+router.get("/categories", GetCategories)
 
 export default router

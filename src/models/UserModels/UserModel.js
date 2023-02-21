@@ -43,6 +43,6 @@ const User = mongoose.Schema({
   //     ref: 'carts'
   //   }
   // ],
-});
+},{ versionKey: false });
 const UserModel = mongoose.model("users", User);
 export default UserModel;

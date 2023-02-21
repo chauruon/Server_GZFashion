@@ -3,10 +3,22 @@ import moment from "moment";
 const CurrentDate = moment().unix();
 
 const Cate = mongoose.Schema({
-  categories: {
-    type: SchemaTypes.Mixed,
+  type:{
+    type:SchemaTypes.Number,
     require: true,
   },
-});
+  title:{
+    type:SchemaTypes.String,
+    require: true,
+  },
+  icon:{
+    type:SchemaTypes.String,
+    // require: true,
+  },
+  createAt: {
+    type: Number,
+    default: CurrentDate,
+  },
+},{ versionKey: false });
 const CategoriesModel = mongoose.model("categories", Cate);
 export default CategoriesModel;

@@ -7,6 +7,6 @@ const BannerNotify = mongoose.Schema({
     type: SchemaTypes.Array,
     require: true,
   },
-});
+},{ versionKey: false });
 const BannerNotifyModel = mongoose.model("banner_notify", BannerNotify);
 export default BannerNotifyModel;
