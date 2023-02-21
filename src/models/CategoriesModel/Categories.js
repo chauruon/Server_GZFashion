@@ -4,7 +4,7 @@ const CurrentDate = moment().unix();
 
 const Cate = mongoose.Schema({
   categories: {
-    type: SchemaTypes.Array,
+    type: SchemaTypes.Mixed,
     require: true,
   },
 });

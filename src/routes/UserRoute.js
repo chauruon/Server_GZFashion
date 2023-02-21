@@ -15,7 +15,7 @@ import {
 } from "../middleware/storageImage.js";
 import multer from "multer";
 import { GetBannerNotify, UploadBannerNotify } from "../controllers/BannerNotify/Notify.js";
-import { NewCategories } from "../controllers/CategoriesController/Categories.js";
+import { NewCategories, UpNewCategories } from "../controllers/CategoriesController/Categories.js";
 
 const router = express.Router();
 
@@ -41,7 +41,9 @@ router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotif
 router.get(`/banner_notify`,GetBannerNotify)
 
 // Categories
-router.post("/new_categories", NewCategories)
+router.post("/new_update_categories", UpNewCategories);
+router.post("/new_categories", NewCategories);
+
 // router.get("/categories", GetCategories)
 
 export default router
