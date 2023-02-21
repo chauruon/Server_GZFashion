@@ -12,8 +12,7 @@ Hoặc
 ```
 npm install
 ```
-<br>
-​* Sau khi cài đặt thư viện xong thì chúng ta chạy dữ án 
+* Sau khi cài đặt thư viện xong thì chúng ta chạy dữ án <br>
 ```
 yarn start
 ```
