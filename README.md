@@ -4,7 +4,7 @@ chỉ tham khảo source thì không cần chạy nó chỉ đọc hiểu code l
 ### Chạy lệnh:
 
 Cài đặt thư viện cần thiết vào dữ án<br>
-* Nếu đã cài đặt yarn vào máy rồi<br>
+* Nếu đã cài đặt yarn vào máy rồi (khuyển khích cài đặt yarn vào máy)<br>
 ```
 yarn install 
 ```
