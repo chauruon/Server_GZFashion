@@ -1,5 +1,7 @@
 
 # Server_GZFashion
+Để chạy được dữ án này cần phải cài trước Nodejs mới có thể làm thao tác bên dưới được<br>
+chỉ tham khảo source thì không cần chạy nó chỉ đọc hiểu code là được
 ## Setup
 ### Chạy lệnh:
 
