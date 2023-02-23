@@ -18,9 +18,9 @@ app.use(express.static(path.join("public")));
 app.use(`${process.env.API}`,UserRoute);
 
 mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
-console.log(`Server đang chạy port: ${process.env.PORT}`)
+  console.log(`Server đang chạy port: ${process.env.PORT}`)
 ).catch((error)=> 
-console.log(error.message)
+  console.log(`Server lỗi: `,error.message)
 );
 app.listen(process.env.PORT)
 
