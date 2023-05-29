@@ -8,7 +8,7 @@ Cài đặt thư viện cần thiết vào dữ án<br>
 ```
 yarn install 
 ```
-Hoặc
+Hoặc (cài nodejs trước)
 ```
 npm install
 ```
