@@ -8,14 +8,16 @@ import UserRoute from "./src/routes/UserRoute.js";
 import path from "path";
 dotenv.config();
 const app = express();
-
+// app.configure(function(){
+//   app.use(express.bodyParser());
+// });
 app.use(express.json());
 app.use(bodyParser.json({limit:"30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 app.use(cors());
 app.use(express.static(path.join("public")));
 
-
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   app.listen(process.env.PORT, ()=> 
     console.log(`Server đang chạy port: ${process.env.PORT}`)

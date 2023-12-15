@@ -37,12 +37,16 @@ const User = mongoose.Schema({
     minLength: 9,
     maxLength: 13,
   },
+  isDeleted: { type: Boolean, defaults: false },
+  delete_date:{
+    type: Number,
+  },
   // cart_id: [
   //   {
   //     type: Schema.Types.ObjectId,
   //     ref: 'carts'
   //   }
   // ],
-});
+},{ versionKey: false });
 const UserModel = mongoose.model("users", User);
 export default UserModel;

@@ -7,7 +7,7 @@
   *  2:"Giày",
   * }
 	*/
-export const TypeCategories = [
+export const Categories = [
   "Áo",
   "Quần",
   "Giày",

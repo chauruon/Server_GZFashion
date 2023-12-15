@@ -59,34 +59,110 @@ export const LoginUser = async (req, res) => {
 
 export const UpdateUser = async (req, res) => {
   try {
-    let fullUrl = "/images/" + req.file.filename;
-    const update = await UserModel.findByIdAndUpdate(req.body.id, {$set: {
-      username: req.body.username,
-      password: req.body.password,
-      name: req.body.name,
-      address: req.body.address,
-      numPhone: req.body.numPhone,
-      avatar: fullUrl
-    }},{new:true});
-
+    let { id } = req.body;
+    let fullUrl = typeof req.file != 'undefined' ? "/images/" + req.file?.filename : '';
+    let update = null
+    if (typeof id != 'undefined' ) {
+      update = await UserModel.findByIdAndUpdate(id, {$set: {
+        username: req.body.username,
+        password: req.body.password,
+        name: req.body.name,
+        address: req.body.address,
+        numPhone: req.body.numPhone,
+        avatar: fullUrl != '' ? fullUrl : ''
+      }},{new:true});
+    }else{
+      res.status(409).json({
+        status: false,
+        message: "Vui lòng cung cấp id người dùng!",
+      });
+    }
     
     if (update !== null) {
       res.status(200).json({
         status: true,
         message: "Đã cập nhật thông tin thành công!",
-      });
-    }else{
-      res.status(409).json({
-        status: false,
-        message: "Cập nhật thông tin không thành công!",
+        user: update
       });
     }
   } catch (e) {
     console.log('error: ', e);
-    res.status(409).json({message: e.message})
+    // res.status(409).json({status: false,message: e.message})
     res.status(400).json({
       status: false,
       message:"Vui lòng liêm hệ admin",
     });
   }
+}
+
+export const ListUser = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1; // Get the page from the query parameters, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Set the default page size to 10, you can adjust it as needed
+
+    const skip = (page - 1) * pageSize;
+
+    const totalUsers = await UserModel.countDocuments({});
+    const totalPages = Math.ceil(totalUsers / pageSize);
+
+    const users = await UserModel.find({}).skip(skip).limit(pageSize);
+
+    if (!res.status(200)) {
+      res.status(200).json({ status: false, message: "Get all products error!" });
+    } else {
+      res.status(200).json({
+        status: true,
+        page,
+        pageSize,
+        totalPages,
+        totalUsers,
+        users,
+      });
+    }
+  } catch (e) {
+    console.log("e: ", e);
+    res.status(409).json({ status: false, message: e.message });
+
+    res.status(500).json({ status: false, message: e.message });
+  }
+};
+
+
+export const RemoveUsers = async (req,res) => {
+	await UserModel.deleteMany();
+
+	if (!res.status(200)) {
+    res.status(500).json(
+      {
+        status:false,
+        message:"Vui lòng hỏi Admin!"
+      }
+    );
+	} else res.status(200).json(
+    {
+      status:true,
+      message:"Xóa người dùng thành công!"
+    }
+  );
+}
+
+
+export const removeByIDUsers = async (req,res) => {
+  const {id} = req.body;
+  let softDelete = await UserModel.findByIdAndUpdate(id,{
+    $set:{UserModel: [...banner,ojbImage]}
+  },{new: true})
+	if (!res.status(200)) {
+    res.status(500).json(
+      {
+        status:false,
+        message:"Vui lòng hỏi Admin!"
+      }
+    );
+	} else res.status(200).json(
+    {
+      status:true,
+      message:"Xóa người dùng thành công!"
+    }
+  );
 }
