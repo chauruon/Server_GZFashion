@@ -5,6 +5,7 @@ import {
   UpdateUser,
   ListUser,
   RemoveUsers,
+  SoftDeleteUser,
 } from "../controllers/UserController/User.js";
 import {
   GetDetadilProducsts,
@@ -46,8 +47,9 @@ const menu_multer = multer({ storage: menuMulter });
 router.post(`/register`, RegisterUser);
 router.post(`/login`, LoginUser);
 router.patch(`/update_user`,avatar.single('avatar'), UpdateUser);
-router.get('/users',ListUser);
+router.get('/list_users',ListUser);
 router.delete('/delete_users',RemoveUsers);
+router.patch('/soft_delete_user/:id',SoftDeleteUser);
 
 
 
@@ -58,7 +60,7 @@ router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
 router.get(`/product_detail/:id`,GetDetadilProducsts);
 router.get('/products',AllProduct);
 router.delete('/delete_product',RemoveProduct);
-router.post('/soft_detele_product/:id/:isDeleted',SoftDeleteByIDProduct);
+router.patch('/soft_detele_product/:id',SoftDeleteByIDProduct);
 
 // banner
 router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify);

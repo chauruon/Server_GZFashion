@@ -2,7 +2,7 @@ import ProductModel from "../../models/ProductModels/ProductModels.js";
 import moment from "moment";
 import Jwt from "jsonwebtoken";
 import fs from "fs";
-
+const currentDate = moment().unix();
 /**
  * Tạo mới sản phẩm
  * @param {id}
@@ -114,17 +114,22 @@ export const RemoveProduct = async (req,res) => {
 
 
 export const SoftDeleteByIDProduct = async (req, res) => {
-  console.log('req.params: ', req.params);
-  console.log('req.query: ', req.query);
-  console.log('req.body: ', req.body);
+  const { id } = req.params;
+  const { isDeleted } = req.body;
   try {
-
+    let softDelete = await ProductModel.findByIdAndUpdate(id,{
+      $set:{
+        isDeleted,
+        delete_date: isDeleted === true ? currentDate : null
+      }
+    },{new: true});
+    
     if (!res.status(200)) {
       res.status(200).json({ status: false, message: "Get all products error!" });
     } else {
       res.status(200).json({
         status: true,
-        // prodaSD, 
+        product: softDelete 
       });
     }
   } catch (e) {

@@ -2,7 +2,11 @@
 
 # dependencies
 /node_modules
-node_modules
+# node_modules
+# /avatar
+# /banner_notify
+# /banner_product
+# /menus
 /.pnp
 .pnp.js
 

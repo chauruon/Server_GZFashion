@@ -6,7 +6,7 @@ const Menus = mongoose.Schema({
   menu: {
     type: SchemaTypes.Array,
     require: true,
-  },
+  },  
 },{ versionKey: false });
 const MenusModel = mongoose.model("menus", Menus);
 export default MenusModel;

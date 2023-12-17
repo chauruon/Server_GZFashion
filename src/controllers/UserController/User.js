@@ -1,15 +1,18 @@
 import UserModel from "../../models/UserModels/UserModel.js";
 import CryptoJS from "crypto-js";
 import Jwt from "jsonwebtoken";
-import fs from "fs"
+import fs from "fs";
+import moment from "moment";
+
+const currentDate = moment().unix();
 
 export const RegisterUser = async (req, res) => {
-  const{numPhone, username,password, address} = req.body;
+  const{num_phone, username,password, address} = req.body;
 
   const newPost = new UserModel({
-    numPhone : numPhone,
+    num_phone : num_phone,
     username : username,
-    isAdmin : false,
+    is_admin : false,
     password : CryptoJS.AES.encrypt(password,process.env.ACCESS_SECRET).toString(),
     address : address,
   });
@@ -18,10 +21,13 @@ export const RegisterUser = async (req, res) => {
     if (!res.status(201)) {
       console.log(`RegisterUser error`);
     }
-    res.status(201).json(newPost);
+    res.status(201).json({
+      status: true,
+      user: newPost
+    });
   } catch (e) {
     console.log("🚀 ~ file: User.js:7 ~ RegisterUser ~ error", e)
-    res.status(409).json({message: e.message})
+    res.status(409).json({status: false,message: e.message})
     res.status(400).json({
       status: false,
       message:"Vui lòng liêm hệ admin",
@@ -105,11 +111,12 @@ export const ListUser = async (req, res) => {
     const totalUsers = await UserModel.countDocuments({});
     const totalPages = Math.ceil(totalUsers / pageSize);
 
-    const users = await UserModel.find({}).skip(skip).limit(pageSize);
-
+    const list = await UserModel.find({}).skip(skip).limit(pageSize);
+    
     if (!res.status(200)) {
       res.status(200).json({ status: false, message: "Get all products error!" });
     } else {
+      const users = list.filter((val) => val.isDeleted !== true);
       res.status(200).json({
         status: true,
         page,
@@ -147,22 +154,29 @@ export const RemoveUsers = async (req,res) => {
 }
 
 
-export const removeByIDUsers = async (req,res) => {
-  const {id} = req.body;
-  let softDelete = await UserModel.findByIdAndUpdate(id,{
-    $set:{UserModel: [...banner,ojbImage]}
-  },{new: true})
-	if (!res.status(200)) {
-    res.status(500).json(
-      {
-        status:false,
-        message:"Vui lòng hỏi Admin!"
+export const SoftDeleteUser = async (req, res) => {
+  const { id } = req.params;
+  const { isDeleted } = req.body;
+  try {
+    let softDelete = await UserModel.findByIdAndUpdate(id,{
+      $set:{
+        isDeleted,
+        delete_date: isDeleted === true ? currentDate : null
       }
-    );
-	} else res.status(200).json(
-    {
-      status:true,
-      message:"Xóa người dùng thành công!"
+    },{new: true});
+    
+    if (!res.status(200)) {
+      res.status(200).json({ status: false, message: "Get all products error!" });
+    } else {
+      res.status(200).json({
+        status: true,
+        product: softDelete 
+      });
     }
-  );
-}
+  } catch (e) {
+    console.log("e: ", e);
+    res.status(409).json({ status: false, message: e.message });
+
+    res.status(500).json({ status: false, message: e.message });
+  }
+};

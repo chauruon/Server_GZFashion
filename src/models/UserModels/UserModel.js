@@ -1,45 +1,49 @@
-import mongoose from "mongoose";
+import mongoose, { SchemaType, SchemaTypes } from "mongoose";
 import moment from "moment";
-const CurrentDate = moment().unix();
+const currentDate = moment().unix();
 
 const User = mongoose.Schema({
   username: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
     trim: true,
   },
   password: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
   },
   name: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
     trim: true,
   },
   avatar: {
-    type: String,
+    type: SchemaTypes.String,
     default: "",
   },
-  isAdmin: {
+  is_admin: {
     type: Boolean,
   },
-  createAt: {
-    type: Number,
-    default: CurrentDate,
+  create_at: {
+    type: SchemaTypes.Number,
+    default: currentDate,
   },
   address: {
-    type: String,
+    type: SchemaTypes.String,
   },
-  numPhone: {
-    type: Number,
+  num_phone: {
+    type: SchemaTypes.Number,
     required: true,
     minLength: 9,
     maxLength: 13,
   },
-  isDeleted: { type: Boolean, defaults: false },
+  is_deleted: {
+    type: SchemaTypes.Boolean,
+    default: false
+  },
   delete_date:{
-    type: Number,
+    type: SchemaTypes.Number,
+    default: null
   },
   // cart_id: [
   //   {

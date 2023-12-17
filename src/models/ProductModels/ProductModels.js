@@ -29,14 +29,13 @@ const Product = mongoose.Schema({
     type: SchemaTypes.Array,
     require: true,
   },
-  // isDeleted: { type: SchemaTypes.Boolean, default: false },
-  // delete_date:{
-  //   type: SchemaTypes.Number,
-  //   default: null
-  // },
-  isDeleted: { type: Boolean, defaults: false },
+  isDeleted: {
+    type: SchemaTypes.Boolean,
+    default: false
+  },
   delete_date:{
-    type: Number,
+    type: SchemaTypes.Number,
+    default: null
   },
   // cart_id: [
   //   {

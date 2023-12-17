@@ -1,6 +1,6 @@
 import moment from "moment";
 import { Schema, SchemaTypeOptions, SchemaTypes } from "mongoose";
-import MenusModel from "../../models/Menu/MenuModels.js";
+import MenusModel from "../../models/Category/MenuModels.js";
 import CryptoJS from "crypto-js";
 
 /**
