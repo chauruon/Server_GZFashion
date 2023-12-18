@@ -6,6 +6,7 @@ import {
   ListUser,
   RemoveUsers,
   SoftDeleteUser,
+  Profile,
 } from "../controllers/UserController/User.js";
 import {
   GetDetadilProducsts,
@@ -13,11 +14,14 @@ import {
   AllProduct,
   RemoveProduct,
   SoftDeleteByIDProduct,
+  PapularProduct,
+  UpdateProduct,
 } from "../controllers/ProductController/Products.js";
 import {
   UploadMenus,
   RemoveMenus,
-  ListMenus
+  ListMenus,
+  detailMenu,
 } from "../controllers/MenuController/Menu.js";
 import {
   avatarStorage,
@@ -50,6 +54,7 @@ router.patch(`/update_user`,avatar.single('avatar'), UpdateUser);
 router.get('/list_users',ListUser);
 router.delete('/delete_users',RemoveUsers);
 router.patch('/soft_delete_user/:id',SoftDeleteUser);
+router.get(`/profile/:id`, Profile);
 
 
 
@@ -61,14 +66,20 @@ router.get(`/product_detail/:id`,GetDetadilProducsts);
 router.get('/products',AllProduct);
 router.delete('/delete_product',RemoveProduct);
 router.patch('/soft_detele_product/:id',SoftDeleteByIDProduct);
+router.patch('/update_product/:id',UpdateProduct);
+router.get('/papular_product/:all', PapularProduct);
+
+
 
 // banner
 router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify);
 router.get(`/banner_notify`,GetBannerNotify);
 
+
 // Menu
 router.post(`/up_menu`,menu_multer.single('icon'),UploadMenus);
 router.get('/menus',ListMenus)
 router.delete(`/delete_menu`,RemoveMenus);
+router.get('/detail_menu/:id',detailMenu);
 
 export default router

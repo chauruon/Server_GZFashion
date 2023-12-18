@@ -40,7 +40,13 @@ export const ListMenus = async (req, res) => {
     const totalProducts = await MenusModel.countDocuments({});
     const totalPages = Math.ceil(totalProducts / pageSize);
 
-    const menus = await MenusModel.find({}).skip(skip).limit(pageSize);
+    const cate = await MenusModel.find({}).skip(skip).limit(pageSize);
+    let list = [];
+
+    cate.map((val,idx)=>{
+      let _id = val._id;
+      list = [{_id,...val.menu[idx]}];
+    });
 
     if (!res.status(200)) {
       res.status(200).json({ status: false, message: "Get menus error!" });
@@ -51,7 +57,7 @@ export const ListMenus = async (req, res) => {
         pageSize,
         totalPages,
         totalProducts,
-        menus,
+        menus: list
       });
     }
   } catch (e) {
@@ -72,3 +78,21 @@ export const RemoveMenus = async (req,res) => {
 	if (!res.status(200)) {
 	} else res.status(200).json({status:true,message:"Xóa thành công!"});
 }
+
+export const detailMenu = async (req, res) => {
+  const { id } = req.params;
+  const lengthId = id.length;
+  
+  try {
+    let detail = await MenusModel.findById(id);
+
+    if (!detail) {
+      return res.status(404).json({ status: false, message: 'Product not found' });
+    } else {
+      return res.status(200).json({ status: true, product: detail });
+    }
+    } catch (e) {
+      console.log('Error:', e);
+      return res.status(500).json({ status: false, message: 'Internal Server Error' });
+    }
+};

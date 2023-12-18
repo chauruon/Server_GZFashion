@@ -8,6 +8,14 @@ const Product = mongoose.Schema({
     type: SchemaTypes.Mixed,
     require: true,
   },
+  price:{
+    type: SchemaTypes.Number,
+    require: true,
+  },
+  sale_off:{
+    type: SchemaTypes.Number,
+    // default: null, 
+  },
   title:{
     type: SchemaTypes.String,
     require: true,
@@ -17,19 +25,20 @@ const Product = mongoose.Schema({
     type: SchemaTypes.String,
     require: true,
   },
-  createAt: {
+  create_at: {
     type: Number,
     default: CurrentDate,
   },
-  categories:{
-    type: SchemaTypes.Number,
-    require: true,
+  category:{
+    type: SchemaTypes.ObjectId,
+    ref: 'menus',
+    // require: true,
   },
   banner:{
     type: SchemaTypes.Array,
     require: true,
   },
-  isDeleted: {
+  is_deleted: {
     type: SchemaTypes.Boolean,
     default: false
   },
@@ -37,6 +46,24 @@ const Product = mongoose.Schema({
     type: SchemaTypes.Number,
     default: null
   },
+  view:{
+    type: SchemaTypes.Number,
+    default: 0
+  },
+  quantity_purchased:{
+    type: SchemaTypes.Number,
+    default: 0
+  },
+  star:{
+    type: SchemaTypes.Number,
+    default: 0
+  },
+  user_favorite:[
+    {
+      type: SchemaTypes.ObjectId,
+      ref: 'users'
+    }
+  ],
   // cart_id: [
   //   {
   //     type: Schema.Types.ObjectId,

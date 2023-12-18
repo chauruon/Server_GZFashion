@@ -45,6 +45,12 @@ const User = mongoose.Schema({
     type: SchemaTypes.Number,
     default: null
   },
+  favorite:[
+    {
+      type: SchemaTypes.ObjectId,
+      ref: 'product'
+    }
+  ]
   // cart_id: [
   //   {
   //     type: Schema.Types.ObjectId,

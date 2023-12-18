@@ -180,3 +180,32 @@ export const SoftDeleteUser = async (req, res) => {
     res.status(500).json({ status: false, message: e.message });
   }
 };
+
+export const Profile = async (req,res)=>{
+  try {
+    let { id } = req.params;
+    let update = null
+    if (typeof id != 'undefined' ) {
+      update = await UserModel.findById(id);
+    }else{
+      res.status(409).json({
+        status: false,
+        message: "Vui lòng cung cấp id người dùng!",
+      });
+    }
+    
+    if (update !== null) {
+      res.status(200).json({
+        status: true,
+        user: update
+      });
+    }
+  } catch (e) {
+    console.log('error: ', e);
+    // res.status(409).json({status: false,message: e.message})
+    res.status(400).json({
+      status: false,
+      message:"Vui lòng liêm hệ admin",
+    });
+  }
+}
