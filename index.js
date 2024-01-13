@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.static(path.join("public")));
 
 app.use(`${process.env.API}`,router);
-
+mongoose.set("strictQuery", false);
 mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 
   console.log(`Server đang chạy port: ${process.env.PORT}`)
 ).catch((error)=> 
