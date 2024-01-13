@@ -11,7 +11,7 @@ export const bannerProduct = multer.diskStorage({
     cb(null, 'public/banner_product')
   },
   filename: function (req, file, cb) {
-    var dir = './banner_product';
+    var dir = 'public/banner_product';
 
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
@@ -29,7 +29,7 @@ export const bannerNotify = multer.diskStorage({
     cb(null, 'public/banner_notify')
   },
   filename: function (req, file, cb) {
-    var dir = './banner_notify';
+    var dir = 'public/banner_notify';
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
     }
@@ -46,7 +46,7 @@ export const avatarStorage = multer.diskStorage({
     cb(null, 'public/avatar')
   },
   filename: function (req, file, cb) {
-    var dir = './avatar';
+    var dir = 'public/avatar';
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
     }
