@@ -45,4 +45,8 @@ app.listen(process.env.PORT)
 //   ]
 // }
 
+    // "node":"18.x" 
+    // "node": ">=18.0.0 <19.0.0"
+
+
 
