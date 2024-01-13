@@ -25,3 +25,24 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
 app.listen(process.env.PORT)
 
 
+// {
+//   "version": 2,
+//   "builds": [
+//     {
+//       "src": "index.js",
+//       "use": "@vercel/node"
+//     }
+//   ],
+//   "routes": [
+//     {
+//       "src": "/src/(.*)",
+//       "dest": "index.js"
+//     },
+//     {
+//       "src": "/(.*)",
+//       "dest": "/"
+//     }
+//   ]
+// }
+
+
