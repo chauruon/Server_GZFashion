@@ -29,7 +29,7 @@ export const bannerNotify = multer.diskStorage({
     cb(null, 'public/banner_notify')
   },
   filename: function (req, file, cb) {
-    var dir = './public/banner_notify';
+    var dir = './public/banner_notify/';
 
     // if (!fs.existsSync(dir)){
     //     fs.mkdirSync(dir, { recursive: true });
