@@ -31,9 +31,9 @@ export const bannerNotify = multer.diskStorage({
   filename: function (req, file, cb) {
     var dir = './public/banner_notify';
 
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir, { recursive: true });
-    }
+    // if (!fs.existsSync(dir)){
+    //     fs.mkdirSync(dir, { recursive: true });
+    // }
     const typeFile = file.mimetype.split("/");
     const ext = file.originalname.substring(file.originalname.lastIndexOf("."));
     cb(null, file.fieldname + '-' + Date.now() + ext)
