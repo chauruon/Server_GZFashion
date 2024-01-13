@@ -13,7 +13,7 @@
     },
     {
       "src": "/src/(.*)",
-      "dest": "/"
+      "dest": "index.js"
     }
   ]
 }
