@@ -3,20 +3,20 @@ import {
   RegisterUser,
   LoginUser,
   UpdateUser,
-} from "./controllers/UserController/User.js";
+} from "../controllers/UserController/User.js";
 import {
   GetAllProducsts,
   GetDetadilProducsts,
   NewProducts,
-} from "./controllers/ProductController/Products.js";
+} from "../controllers/ProductController/Products.js";
 import {
   avatarStorage,
   bannerNotify,
   bannerProduct,
-} from "./middleware/storageImage.js";
+} from "../middleware/storageImage.js";
 import multer from "multer";
-import { GetBannerNotify, UploadBannerNotify } from "./controllers/BannerNotify/Notify.js";
-import { GetCategories, NewCategories, UpNewCategories } from "./controllers/CategoriesController/Categories.js";
+import { GetBannerNotify, UploadBannerNotify } from "../controllers/BannerNotify/Notify.js";
+import { GetCategories, NewCategories, UpNewCategories } from "../controllers/CategoriesController/Categories.js";
 
 const router = express.Router();
 

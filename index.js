@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import * as dotenv from 'dotenv';
 import moment from "moment";
-import router from "./src/router.js";
+import router from "./src/routes/router.js";
 import path from "path";
 dotenv.config();
 const app = express();
