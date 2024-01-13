@@ -12,8 +12,8 @@
 /build
 
 # public
-public/banner_notify/
-public/banner_product/
+# public/banner_notify/
+# public/banner_product/
 
 # misc
 .DS_Store
