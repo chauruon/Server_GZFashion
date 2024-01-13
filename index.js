@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import * as dotenv from 'dotenv';
 import moment from "moment";
-import UserRoute from "./routes/UserRoute.js";
+import UserRoute from "./src/routes/UserRoute.js";
 import path from "path";
 dotenv.config();
 const app = express();
