@@ -16,5 +16,6 @@
       "dest": "/"
     }
   ],
-  "regions": ["sfo1"]
+  "regions": ["sfo1"],
+  "public": true
 }
