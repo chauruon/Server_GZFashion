@@ -1,4 +1,5 @@
 import ProductModel from "../../models/ProductModels/ProductModels.js";
+import ShoppingCartModel from "../../models/ProductModels/ShoppingCart.js"
 import moment from "moment";
 import Jwt from "jsonwebtoken";
 import fs from "fs";
@@ -83,5 +84,20 @@ export const GetAllProducsts = async (req,res) => {
       status: false,
       message: "Vui lòng liêm hệ admin",
     });
+  }
+}
+
+export const ShoppingCart = async (req,res) => {
+  const { id } = req.body;
+  if (id) {
+    const cart = await ProductModel.findById(id).populate("categories");
+    // console.log('cart: ', cart);
+		// const find = await ProductModel.findOne({_id: id});
+    // console.log('find: ', find);
+    if (cart) {
+      await ShoppingCartModel.findByIdAndUpdate(id,{
+        $set:{shopping_cart: [...cart]}
+      },{new: true})
+    }
   }
 }

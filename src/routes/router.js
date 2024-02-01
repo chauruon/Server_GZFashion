@@ -8,6 +8,7 @@ import {
   GetAllProducsts,
   GetDetadilProducsts,
   NewProducts,
+  ShoppingCart,
 } from "../controllers/ProductController/Products.js";
 import {
   avatarStorage,
@@ -36,14 +37,16 @@ router.put(`/update_user`,avatar.single('avatar'), UpdateUser);
  */
 router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
-router.get(`/products`,GetAllProducsts)
+router.get(`/products`,GetAllProducsts);
+router.post(`/shopping_cart`,ShoppingCart);
+
 // Banner
-router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify)
-router.get(`/banner_notify`,GetBannerNotify)
+router.post(`/up_banner_notify`,banner_notify.single('banner'),UploadBannerNotify);
+router.get(`/banner_notify`,GetBannerNotify);
 
 // Categories
 router.post("/new_update_categories", UpNewCategories);
 router.post("/new_categories", NewCategories);
-router.get("/categories", GetCategories)
+router.get("/categories", GetCategories);
 
 export default router
