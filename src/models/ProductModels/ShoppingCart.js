@@ -7,6 +7,6 @@ const ShoppingCart = mongoose.Schema({
     type: SchemaTypes.Array,
     require: true,
   },
-},{ versionKey: false });
+},{versionKey: false });
 const ShoppingCartModel = mongoose.model("shopping_cart", ShoppingCart);
 export default ShoppingCartModel;

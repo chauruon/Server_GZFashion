@@ -91,13 +91,20 @@ export const ShoppingCart = async (req,res) => {
   const { id } = req.body;
   if (id) {
     const cart = await ProductModel.findById(id).populate("categories");
-    // console.log('cart: ', cart);
-		// const find = await ProductModel.findOne({_id: id});
-    // console.log('find: ', find);
-    if (cart) {
-      await ShoppingCartModel.findByIdAndUpdate(id,{
-        $set:{shopping_cart: [...cart]}
-      },{new: true})
+    console.log('cart: ', cart);
+    const _id = cart._id;
+    const ojb = {
+      creat_at: cart.create_at,
+      thumbnail:cart.thumbnail,
+      title:cart.title,
+      decs:cart.decs,
+      is_deleted:cart.is_deleted,
     }
+    const newProducts = await ShoppingCartModel({_id: _id, shopping_cart: ojb });
+    newProducts.save();
+
+    if (!res.status(200)) {
+      console.log(`Lưu sản phẩm không thành công`);
+    } else res.status(200).json(newProducts);
   }
 }
