@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import * as dotenv from 'dotenv';
 import moment from "moment";
+import fs from "fs";
 import router from "./src/routes/router.js";
 import path from "path";
 dotenv.config();
@@ -22,6 +23,20 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
 ).catch((error)=> 
   console.log(`Server lỗi: `,error.message)
 );
+
+
+const httpsOptions = {
+  cert: fs.readFileSync(path.join(__dirname,'server.crt')),
+  key: fs.readFileSync(path.join(__dirname,'server.key'))
+}
+
+
+
+https.createServer(httpsOptions, app).listen(port, function()
+{
+  console.log(`Serving the ${directoryToServe}/directory at https://localhost:${port}`)
+});
+
 app.listen(process.env.PORT)
 
 
