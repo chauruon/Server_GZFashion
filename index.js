@@ -25,17 +25,15 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
 );
 
 
-const httpsOptions = {
-  cert: fs.readFileSync(path.join(__dirname,'server.crt')),
-  key: fs.readFileSync(path.join(__dirname,'server.key'))
-}
+// const httpsOptions = {
+//   cert: fs.readFileSync(path.join(__dirname,'server.crt')),
+//   key: fs.readFileSync(path.join(__dirname,'server.key'))
+// }
 
-
-
-https.createServer(httpsOptions, app).listen(port, function()
-{
-  console.log(`Serving the ${directoryToServe}/directory at https://localhost:${port}`)
-});
+// https.createServer(httpsOptions, app).listen(port, function()
+// {
+//   console.log(`Serving the ${directoryToServe}/directory at https://localhost:${port}`)
+// });
 
 app.listen(process.env.PORT)
 
