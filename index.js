@@ -24,7 +24,14 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
   console.log(`Server lỗi: `,error.message)
 );
 
-
+var crt = fs.readFileSync(path.join(__dirname,'server.crt'));
+var key = fs.readFileSync(path.join(__dirname,'server.key'));
+if (!fs.existsSync(crt)){
+  fs.mkdirSync(crt, { recursive: true });
+}
+if (!fs.existsSync(key)){
+  fs.mkdirSync(key, { recursive: true });
+}
 // const httpsOptions = {
 //   cert: fs.readFileSync(path.join(__dirname,'server.crt')),
 //   key: fs.readFileSync(path.join(__dirname,'server.key'))
