@@ -35,31 +35,4 @@ mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTop
 //   console.log(`Serving the ${directoryToServe}/directory at https://localhost:${port}`)
 // });
 
-app.listen(process.env.PORT)
-
-
-// {
-//   "version": 2,
-//   "builds": [
-//     {
-//       "src": "index.js",
-//       "use": "@vercel/node"
-//     }
-//   ],
-//   "routes": [
-//     {
-//       "src": "/src/(.*)",
-//       "dest": "index.js"
-//     },
-//     {
-//       "src": "/(.*)",
-//       "dest": "/"
-//     }
-//   ]
-// }
-
-    // "node":"18.x" 
-    // "node": ">=18.0.0 <19.0.0"
-
-
-
+app.listen(process.env.PORT);
