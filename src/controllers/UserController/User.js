@@ -1,24 +1,38 @@
 import UserModel from "../../models/UserModels/UserModel.js";
 import CryptoJS from "crypto-js";
 import Jwt from "jsonwebtoken";
-import fs from "fs"
+import { v4 as uuidv4 } from 'uuid';
 
 export const RegisterUser = async (req, res) => {
-  const{numPhone, username,password, address} = req.body;
-
+  const{num_phone, username,password, address} = req.body;
+  // const uuidv4 = uuidv4();
+  // console.log('saf: ', saf);
   const newPost = new UserModel({
-    numPhone : numPhone,
+    num_phone : num_phone,
     username : username,
-    isAdmin : false,
+    is_admin : false,
     password : CryptoJS.AES.encrypt(password,process.env.ACCESS_SECRET).toString(),
     address : address,
+    uuid: uuidv4(),
   });
+  const duplicateUser = await UserModel.findOne({username : username})
   try {
-    await newPost.save();
-    if (!res.status(201)) {
+    if (!duplicateUser) {
+      await newPost.save();
+      res.status(200).json({
+        status: true,
+        user: newPost,
+      });
+    }else{
+      res.status(400).json({
+        status: false,
+        message:"Duplicate user!",
+      });
+    }
+  
+    if (!res.status(200)) {
       console.log(`RegisterUser error`);
     }
-    res.status(201).json(newPost);
   } catch (e) {
     console.log("🚀 ~ file: User.js:7 ~ RegisterUser ~ error", e)
     res.status(409).json({message: e.message})
@@ -40,7 +54,13 @@ export const LoginUser = async (req, res) => {
       console.log(`RegisterUser error`);
     }
     if (hashPass === password) {
-      res.status(201).json({accessToken,...loginUser._doc});
+      res.status(201).json({
+        status: true,
+        user:{
+          accessToken,
+          ...loginUser._doc
+        }
+      });
     }else{
       res.status(201).json({
         status: false,
@@ -87,6 +107,26 @@ export const UpdateUser = async (req, res) => {
     res.status(400).json({
       status: false,
       message:"Vui lòng liêm hệ admin",
+    });
+  }
+}
+
+export const DeleteUsers = async (req,res) => {
+  try {
+    await UserModel.deleteMany();
+    
+    if (!res.status(200)) {
+      console.log(`delete users error`);
+    } else res.status(200).json({
+      status: true,
+      message: "Xóa users thành công!",
+    });
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
     });
   }
 }

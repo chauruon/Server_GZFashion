@@ -7,13 +7,13 @@ import CryptoJS from "crypto-js";
 
 
 export const UploadBannerNotify = async (req, res) => {
-  const CurrentDate = moment().unix();
+  const currentDate = moment().unix();
   const fullUrl = "/banner_notify/" + req.file.filename;
   try {
     const ojbImage = {
-      id: CryptoJS.AES.encrypt(`${CurrentDate}`,process.env.ACCESS_SECRET).toString(),
+      id: CryptoJS.AES.encrypt(`${currentDate}`,process.env.ACCESS_SECRET).toString(),
       image: fullUrl,
-      createAt: CurrentDate,
+      create_at: currentDate,
     };
 		if (req.body.id) {
 			let updateBanner = null;
@@ -40,7 +40,10 @@ export const UploadBannerNotify = async (req, res) => {
 
 			if (!res.status(201)) {
 				console.log(`Lưu sản phẩm không thành công`);
-			} else res.status(201).json(newBanner);
+			} else res.status(201).json({
+        status: true,
+        banners :newBanner,
+      });
 		}
   } catch (e) {
     console.log("e: ", e);
@@ -70,3 +73,23 @@ export const GetBannerNotify = async (req, res) => {
     });
   }
 };
+
+export const DeleteBanners = async (req, res) => {
+  try {
+    await BannerNotifyModel.deleteMany();
+    
+    if (!res.status(200)) {
+      console.log(`delete products error`);
+    } else res.status(200).json({
+      status: true,
+      message: "Xóa banner thành công!",
+    });
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
+    });
+  }
+}

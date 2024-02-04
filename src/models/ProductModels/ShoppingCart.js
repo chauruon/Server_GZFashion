@@ -3,9 +3,30 @@ import moment from "moment";
 const currentDate = moment().unix();
 
 const ShoppingCart = mongoose.Schema({
-  shopping_cart: {
-    type: SchemaTypes.Array,
+  thumbnail: {
+    type: SchemaTypes.Mixed,
+    // require: true,
+  },
+  title:{
+    type: SchemaTypes.String,
     require: true,
+    maxLength: 20,
+  },
+  decs:{
+    type: SchemaTypes.String,
+    // require: true,
+  },
+  banner:{
+    type: SchemaTypes.Array,
+    // require: true,
+  },
+  create_at: {
+    type: Number,
+    default: currentDate,
+  },
+  categories:{
+    type: Schema.Types.ObjectId,
+    ref: 'categories',
   },
 },{versionKey: false });
 const ShoppingCartModel = mongoose.model("shopping_cart", ShoppingCart);

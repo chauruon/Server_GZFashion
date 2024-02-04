@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import moment from "moment";
-const CurrentDate = moment().unix();
+const currentDate = moment().unix();
 
 const User = mongoose.Schema({
   username: {
@@ -24,18 +24,21 @@ const User = mongoose.Schema({
   isAdmin: {
     type: Boolean,
   },
-  createAt: {
+  create_at: {
     type: Number,
-    default: CurrentDate,
+    default: currentDate,
   },
   address: {
     type: String,
   },
-  numPhone: {
+  num_phone: {
     type: Number,
     required: true,
     minLength: 9,
     maxLength: 13,
+  },
+  uuid:{
+    type: String,
   },
   // cart_id: [
   //   {

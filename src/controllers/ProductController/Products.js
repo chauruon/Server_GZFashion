@@ -1,5 +1,4 @@
 import ProductModel from "../../models/ProductModels/ProductModels.js";
-import ShoppingCartModel from "../../models/ProductModels/ShoppingCart.js"
 import moment from "moment";
 import Jwt from "jsonwebtoken";
 import fs from "fs";
@@ -8,7 +7,7 @@ import { triggerAsyncId } from "async_hooks";
 import CategoriesModel from "../../models/CategoriesModel/Categories.js";
 
 
-export const CurrentDate = moment().unix();
+export const currentDate = moment().unix();
 
 
 /**
@@ -25,7 +24,7 @@ export const NewProducts = async (req, res) => {
 		const newCategories = await CategoriesModel({ 
       type: req.body.type,
       title: req.body.titleCate,
-      createAt: CurrentDate,
+      create_at: currentDate,
     });
     await newCategories.save();
     
@@ -40,7 +39,10 @@ export const NewProducts = async (req, res) => {
     
     if (!res.status(201)) {
       console.log(`Save New Products error`);
-    } else res.status(201).json(newProducts);
+    } else res.status(201).json({
+      status: true,
+      product: newProducts,
+    });
   } catch (e) {
     console.log("e: ", e);
     res.status(409).json({ message: e.message });
@@ -72,10 +74,13 @@ export const GetDetadilProducsts = async (req,res) => {
 
 export const GetAllProducsts = async (req,res) => {
   try {
-    const all = await ProductModel.find({}).populate("categories")
+    const products = await ProductModel.find({}).populate("categories")
     if (!res.status(201)) {
       console.log(`Get Producsts error`);
-    } else res.status(201).json(all);
+    } else res.status(201).json({
+      status: true,
+      products
+    });
 
   } catch (e) {
     console.log('e: ', e);
@@ -87,24 +92,23 @@ export const GetAllProducsts = async (req,res) => {
   }
 }
 
-export const ShoppingCart = async (req,res) => {
-  const { id } = req.body;
-  if (id) {
-    const cart = await ProductModel.findById(id).populate("categories");
-    console.log('cart: ', cart);
-    const _id = cart._id;
-    const ojb = {
-      creat_at: cart.create_at,
-      thumbnail:cart.thumbnail,
-      title:cart.title,
-      decs:cart.decs,
-      is_deleted:cart.is_deleted,
-    }
-    const newProducts = await ShoppingCartModel({_id: _id, shopping_cart: ojb });
-    newProducts.save();
 
+export const DeleteProducts = async (req,res) => {
+  try {
+    await ProductModel.deleteMany();
+    
     if (!res.status(200)) {
-      console.log(`Lưu sản phẩm không thành công`);
-    } else res.status(200).json(newProducts);
+      console.log(`delete products error`);
+    } else res.status(200).json({
+      status: true,
+      message: "Xóa sản phẩm thành công!",
+    });
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
+    });
   }
 }

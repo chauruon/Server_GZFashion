@@ -3,14 +3,14 @@ import CryptoJS from "crypto-js";
 import CategoriesModel from "../../models/CategoriesModel/Categories.js";
 import mongoose from "mongoose";
 
-export const CurrentDate = moment().unix();
+export const currentDate = moment().unix();
 
 export const UpNewCategories = async (req, res) => {
   try {
     const ojbImage = {
       type: req.body.type,
       title: req.body.title,
-      createAt: CurrentDate,
+      create_at: currentDate,
     };
     const CategoriesModelssss = await CategoriesModel.find({});
 
@@ -57,7 +57,7 @@ export const NewCategories = async (req, res) => {
 		const ojb = {
       type: req.body.type,
       title: req.body.title,
-      createAt: CurrentDate,
+      create_at: currentDate,
     };
     const newCategories = await CategoriesModel(ojb);
 
@@ -88,4 +88,24 @@ export const GetCategories = async (req,res) => {
       message: "Vui lòng liêm hệ admin",
     });
 	}
+}
+
+export const DeleteCategories = async (req,res) => {
+  try {
+    await CategoriesModel.deleteMany();
+    
+    if (!res.status(200)) {
+      console.log(`delete categories error`);
+    } else res.status(200).json({
+      status: true,
+      message: "Xóa categories thành công!",
+    });
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
+    });
+  }
 }

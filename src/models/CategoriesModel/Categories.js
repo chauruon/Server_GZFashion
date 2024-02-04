@@ -15,7 +15,7 @@ const Cate = mongoose.Schema({
     type:SchemaTypes.String,
     // require: true,
   },
-  createAt: {
+  create_at: {
     type: Number,
     default: CurrentDate,
   },
