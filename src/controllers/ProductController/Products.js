@@ -76,12 +76,25 @@ export const GetDetadilProducsts = async (req,res) => {
 
 export const GetAllProducsts = async (req,res) => {
   try {
-    const products = await ProductModel.find({}).populate("categories")
-    if (!res.status(201)) {
+    const page = parseInt(req.query.page) || 1; // Get the page from the query parameters, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Set the default page size to 10, you can adjust it as needed
+
+    const skip = (page - 1) * pageSize;
+
+    const totalProducts = await ProductModel.countDocuments({});
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
+    const products = await ProductModel.find({}).populate("categories").skip(skip).limit(pageSize);
+    // const products = await ProductModel.find({}).populate("categories").skip(1).limit(10);;
+    if (!res.status(200)) {
       console.log(`Get Producsts error`);
-    } else res.status(201).json({
+    } else res.status(200).json({
       status: true,
-      products
+      page,
+      pageSize,
+      totalPages,
+      totalProducts,
+      products:products,
     });
 
   } catch (e) {

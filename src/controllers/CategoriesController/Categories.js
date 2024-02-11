@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 export const currentDate = moment().unix();
 
-export const UpNewCategories = async (req, res) => {
+export const UpdateAndNewCategories = async (req, res) => {
   try {
     const ojbImage = {
       type: req.body.type,
@@ -79,7 +79,10 @@ export const NewCategories = async (req, res) => {
 export const GetCategories = async (req,res) => {
 	try {
 		const categoriesArr = await CategoriesModel.find({});
-		res.status(201).json(categoriesArr);
+		res.status(200).json({
+      status: true,
+      categories: categoriesArr,
+    });
 	} catch (e) {
 		console.log('GetCategories err: ', e);
 		res.status(409).json({ message: e.message });

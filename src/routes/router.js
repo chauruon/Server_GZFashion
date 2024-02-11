@@ -31,7 +31,7 @@ import {
 import {
   GetCategories,
   NewCategories,
-  UpNewCategories,
+  UpdateAndNewCategories,
   DeleteCategories,
 } from "../controllers/CategoriesController/Categories.js";
 
@@ -70,8 +70,8 @@ router.get(`/banner_notify`,GetBannerNotify);
 router.delete(`/delete_banners`,DeleteBanners);
 
 // Categories
-router.post("/update_categories", UpNewCategories);
-router.post("/new_categories", NewCategories);
+router.post("/update_categories", UpdateAndNewCategories);
+// router.post("/new_categories", NewCategories);
 router.get("/list_categories", GetCategories);
 router.delete(`/delete_categories`,DeleteCategories);
 
