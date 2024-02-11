@@ -55,7 +55,7 @@ router.get(`/list_users`,GetUsers);
  */
 router.post(`/new_product`,banner_product.array('banner',6),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
-router.get(`/products`,GetAllProducsts);
+router.get(`/list_products`,GetAllProducsts);
 router.delete(`/delete_products`,DeleteProducts);
 
 // Shopping_carts
