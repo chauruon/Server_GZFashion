@@ -1,6 +1,6 @@
 import mongoose, { Schema, SchemaTypes } from "mongoose";
 import moment from "moment";
-const CurrentDate = moment().unix();
+const currentDate = moment().unix();
 
 const Cate = mongoose.Schema({
   type:{
@@ -17,7 +17,7 @@ const Cate = mongoose.Schema({
   },
   create_at: {
     type: Number,
-    default: CurrentDate,
+    default: currentDate,
   },
 },{ versionKey: false });
 const CategoriesModel = mongoose.model("categories", Cate);

@@ -70,9 +70,9 @@ router.get(`/banner_notify`,GetBannerNotify);
 router.delete(`/delete_banners`,DeleteBanners);
 
 // Categories
-router.post("/new_update_categories", UpNewCategories);
+router.post("/update_categories", UpNewCategories);
 router.post("/new_categories", NewCategories);
-router.get("/categories", GetCategories);
+router.get("/list_categories", GetCategories);
 router.delete(`/delete_categories`,DeleteCategories);
 
 
