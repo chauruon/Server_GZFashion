@@ -5,6 +5,7 @@ import {
   LoginUser,
   UpdateUser,
   DeleteUsers,
+  GetUsers,
 } from "../controllers/UserController/User.js";
 import {
   GetAllProducsts,
@@ -47,6 +48,7 @@ router.post(`/register`, RegisterUser);
 router.post(`/login`, LoginUser);
 router.put(`/update_user`,avatar.single('avatar'), UpdateUser);
 router.delete(`/delete_users`,DeleteUsers);
+router.get(`/list_users`,GetUsers);
 
 /**
  * Products

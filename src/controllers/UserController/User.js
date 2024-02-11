@@ -130,3 +130,26 @@ export const DeleteUsers = async (req,res) => {
     });
   }
 }
+
+
+export const GetUsers = async (req,res) => {
+  try {
+    const { userid } = req.body;
+    const list = await UserModel.find({});
+
+    if (!res.status(200)) {
+      console.log(`Get list users error`);
+    } else res.status(200).json({
+      status: true,
+      users: list,
+    });
+
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
+    });
+  }
+}
