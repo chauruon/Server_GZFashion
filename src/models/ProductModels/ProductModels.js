@@ -35,7 +35,7 @@ const Product = mongoose.Schema({
   },
   sale_off: {
     type: Number,
-    default: -1,
+    default: 0,
   },
 },{ versionKey: false });
 const ProductModel = mongoose.model("product", Product);
