@@ -57,7 +57,7 @@ router.get(`/products`,GetAllProducsts);
 router.delete(`/delete_products`,DeleteProducts);
 
 // Shopping_carts
-router.get(`/shopping_carts`,GetShoppingCart);
+router.get(`/list_shopping_carts`,GetShoppingCart);
 router.post(`/shopping_cart`,ShoppingCart);
 router.delete(`/delete_shopping_carts`,DeleteShoppingCart);
 

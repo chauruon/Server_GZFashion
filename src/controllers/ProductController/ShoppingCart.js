@@ -14,7 +14,7 @@ export const ShoppingCart = async (req,res) => {
       decs: req.body.decs ? req.body.decs : "",
       // categories: newCategories._id,
     };
-    const newShoppingCart = await ShoppingCartModel({ojb});
+    const newShoppingCart = await ShoppingCartModel({cart});
 		await newShoppingCart.save();
 
     if (!res.status(200)) {
@@ -28,32 +28,15 @@ export const ShoppingCart = async (req,res) => {
 
 export const GetShoppingCart = async (req,res) => {
   try {
+    const { userid } = req.body;
     const carts = await ShoppingCartModel.find({});
-    // console.log('carts: ', carts);
-
-    const pro = carts.map((value,index) => {
-      console.log('value: ', value);
-      // console.log('index: ', index);
-      // console.log('value.shopping_cart: ', value.shopping_cart[index]);
-      // console.log("🚀 ~ pro ~ value:", value)
-        const element = {
-      	  id_shopping_cart: value._id,
-      	  // id_product: value.shopping_cart[index]._id ? value.shopping_cart[index]._id : "",
-      	  thumbnail: value.shopping_cart[index].thumbnail ? value.shopping_cart[index].thumbnail : "" ,
-      	  creat_at: value.shopping_cart[index]?.creat_at,
-      	  title: value.shopping_cart[index].title ? value.shopping_cart[index].title : "",
-      	  decs: value.shopping_cart[index].decs ? value.shopping_cart[index].decs : "",
-      	  uuid: value.shopping_cart[index].uuid ? value.shopping_cart[index].uuid : "",
-      	}
-    	return {};
-    });
-    console.log("🚀 ~ pro ~ pro:", pro)
+    console.log('carts: ', carts);
 
     if (!res.status(200)) {
       console.log(`Get shopping cart error`);
     } else res.status(200).json({
       status: true,
-      shopping_cart: pro,
+      shopping_carts: carts,
     });
 
   } catch (e) {
