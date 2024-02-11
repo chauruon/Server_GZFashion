@@ -11,7 +11,7 @@ const Product = mongoose.Schema({
   title:{
     type: SchemaTypes.String,
     require: true,
-    maxLength: 20,
+    maxLength: 100,
   },
   decs:{
     type: SchemaTypes.String,
