@@ -2,26 +2,40 @@ import ShoppingCartModel from "../../models/ProductModels/ShoppingCart.js"
 import ProductModel from "../../models/ProductModels/ProductModels.js";
 
 export const ShoppingCart = async (req,res) => {
-  const { id, uuid } = req.body;
-  if (id) {
-    const cart = await ProductModel.findById(id).populate("categories");
-    console.log('cart: ', cart);
-    const id_product = cart._id;
-    const ojb = {
-      // banner: fullUrl ? fullUrl : "",
-      // thumbnail: fullUrl[0] ? fullUrl[0] : "",
-      title: req.body.title ? req.body.title : "", 
-      decs: req.body.decs ? req.body.decs : "",
-      // categories: newCategories._id,
-    };
-    const newShoppingCart = await ShoppingCartModel({cart});
-		await newShoppingCart.save();
+  try {
+    const { id_product, userid  } = req.body;
+    if (id_product && userid) {
+      const shoppingCartModel = await ShoppingCartModel.findById(id_product);
+      if (!shoppingCartModel._id) {
+        const cart = await ProductModel.findById(id_product).populate("categories");
+        const ojb = {
+          userid: userid,
+          ...cart,
+        };
+        const newShoppingCart = await ShoppingCartModel(ojb._doc);
+        await newShoppingCart.save();
 
-    if (!res.status(200)) {
-      console.log(`Lưu giỏ hàng không thành công`);
-    } else res.status(200).json({
-      status: true,
-      newShoppingCart,
+        if (!res.status(200)) {
+          console.log(`Lưu giỏ hàng không thành công`);
+        } else res.status(200).json({
+          status: true,
+          product: newShoppingCart,
+        });
+      }else{
+        res.status(200).json({
+          status: true,
+          message: "Sản phẩm đã tồn tại trong giở hàng!",
+        });
+      }
+      console.log('shoppingCartModel: ', shoppingCartModel);
+      
+    }
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(409).json({ message: e.message });
+    res.status(400).json({
+      status: false,
+      message: "Vui lòng liêm hệ admin",
     });
   }
 }

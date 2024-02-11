@@ -33,6 +33,8 @@ export const NewProducts = async (req, res) => {
       thumbnail: fullUrl[0],
       title: req.body.title,
       decs: req.body.decs,
+      price: req.body.price,
+      sale_off: req.body.sale_off,
       categories: newCategories._id,
     });
     await newProducts.save();

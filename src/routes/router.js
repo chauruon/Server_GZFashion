@@ -53,7 +53,7 @@ router.get(`/list_users`,GetUsers);
 /**
  * Products
  */
-router.post(`/new_product`,banner_product.array('banner',5),NewProducts);
+router.post(`/new_product`,banner_product.array('banner',6),NewProducts);
 router.get(`/product_detail`,GetDetadilProducsts);
 router.get(`/products`,GetAllProducsts);
 router.delete(`/delete_products`,DeleteProducts);

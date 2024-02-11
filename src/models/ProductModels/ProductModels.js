@@ -29,6 +29,14 @@ const Product = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'categories',
   },
+  price: {
+    type: Number,
+    default: currentDate,
+  },
+  sale_off: {
+    type: Number,
+    default: -1,
+  },
 },{ versionKey: false });
 const ProductModel = mongoose.model("product", Product);
 export default ProductModel;
