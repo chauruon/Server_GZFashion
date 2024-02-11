@@ -10,6 +10,7 @@ export const UpdateAndNewCategories = async (req, res) => {
     const ojbImage = {
       type: req.body.type,
       title: req.body.title,
+      icon: req.body.icon,
       create_at: currentDate,
     };
     const CategoriesModelssss = await CategoriesModel.find({});
