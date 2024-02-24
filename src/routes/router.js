@@ -22,6 +22,7 @@ import {
   avatarStorage,
   bannerNotify,
   bannerProduct,
+  categoriesImage,
 } from "../middleware/storageImage.js";
 import {
   GetBannerNotify,
@@ -30,7 +31,6 @@ import {
 } from "../controllers/BannerNotify/Notify.js";
 import {
   GetCategories,
-  NewCategories,
   UpdateAndNewCategories,
   DeleteCategories,
 } from "../controllers/CategoriesController/Categories.js";
@@ -40,13 +40,14 @@ const router = express.Router();
 const avatar = multer({ storage: avatarStorage });
 const banner_notify = multer({ storage: bannerNotify });
 const banner_product = multer({ storage: bannerProduct });
+const categories_image = multer({ storage: categoriesImage });
 
 /**
  * User
  */
 router.post(`/register`, RegisterUser);
 router.post(`/login`, LoginUser);
-router.put(`/update_user`,avatar.single('avatar'), UpdateUser);
+router.patch(`/update_user`,avatar.single('avatar'), UpdateUser);
 router.delete(`/delete_users`,DeleteUsers);
 router.get(`/list_users`,GetUsers);
 
@@ -70,8 +71,7 @@ router.get(`/banner_notify`,GetBannerNotify);
 router.delete(`/delete_banners`,DeleteBanners);
 
 // Categories
-router.post("/update_categories", UpdateAndNewCategories);
-// router.post("/new_categories", NewCategories);
+router.post("/update_categories",categories_image.single('icon'), UpdateAndNewCategories);
 router.get("/list_categories", GetCategories);
 router.delete(`/delete_categories`,DeleteCategories);
 

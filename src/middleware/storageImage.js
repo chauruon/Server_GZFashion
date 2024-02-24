@@ -1,9 +1,7 @@
 import multer from "multer";
-import fs from "fs"
-
-// var fs = require('fs');
-
-
+import fs from "fs-extra"
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 export const bannerProduct = multer.diskStorage({
   
@@ -11,12 +9,6 @@ export const bannerProduct = multer.diskStorage({
     cb(null, 'public/banner_product')
   },
   filename: function (req, file, cb) {
-    var dir = 'public/banner_product';
-
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-    }
-
     const typeFile = file.mimetype.split("/");
     const ext = file.originalname.substring(file.originalname.lastIndexOf("."));
     cb(null, file.fieldname + '-' + Date.now() + ext)
@@ -29,27 +21,28 @@ export const bannerNotify = multer.diskStorage({
     cb(null, 'public/banner_notify')
   },
   filename: function (req, file, cb) {
-    var dir = './public/banner_notify/';
-    // if (!fs.existsSync(dir)){
-    //     fs.mkdirSync(dir, { recursive: true });
-    // }
     const typeFile = file.mimetype.split("/");
     const ext = file.originalname.substring(file.originalname.lastIndexOf("."));
     cb(null, file.fieldname + '-' + Date.now() + ext)
   }
 });
 
-
 export const avatarStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/avatar')
   },
   filename: function (req, file, cb) {
-    var dir = './public/avatar';
+    const typeFile = file.mimetype.split("/");
+    const ext = file.originalname.substring(file.originalname.lastIndexOf("."));
+    cb(null, file.fieldname + '-' + Date.now() + ext)
+  }
+});
 
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir, { recursive: true });
-    }
+export const categoriesImage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/categories_icon')
+  },
+  filename: function (req, file, cb) {
     const typeFile = file.mimetype.split("/");
     const ext = file.originalname.substring(file.originalname.lastIndexOf("."));
     cb(null, file.fieldname + '-' + Date.now() + ext)

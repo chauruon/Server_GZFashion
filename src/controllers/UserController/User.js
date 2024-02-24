@@ -79,8 +79,8 @@ export const LoginUser = async (req, res) => {
 
 export const UpdateUser = async (req, res) => {
   try {
-    let fullUrl = "/images/" + req.file.filename;
-    const update = await UserModel.findByIdAndUpdate(req.body.id, {$set: {
+    const fullUrl = typeof req.file !== "undefined" ? "/avatar/" + req.file.filename : "";
+    const update = await UserModel.findByIdAndUpdate(req.query.id, {$set: {
       username: req.body.username,
       password: req.body.password,
       name: req.body.name,

@@ -6,7 +6,8 @@ export const ShoppingCart = async (req,res) => {
     const { id_product, userid  } = req.body;
     if (id_product && userid) {
       const shoppingCartModel = await ShoppingCartModel.findById(id_product);
-      if (!shoppingCartModel._id) {
+      console.log('shoppingCartModel: ', shoppingCartModel);
+      if (!shoppingCartModel?._id) {
         const cart = await ProductModel.findById(id_product).populate("categories");
         const ojb = {
           userid: userid,
@@ -16,9 +17,13 @@ export const ShoppingCart = async (req,res) => {
         await newShoppingCart.save();
 
         if (!res.status(200)) {
-          console.log(`Lưu giỏ hàng không thành công`);
+          res.status(409).json({
+            status: true,
+            message: "Thêm giỏ hàng không thành công!"
+          });
         } else res.status(200).json({
           status: true,
+          message: "Thêm giỏ hàng thành công!",
           product: newShoppingCart,
         });
       }else{
@@ -27,8 +32,6 @@ export const ShoppingCart = async (req,res) => {
           message: "Sản phẩm đã tồn tại trong giở hàng!",
         });
       }
-      console.log('shoppingCartModel: ', shoppingCartModel);
-      
     }
   } catch (e) {
     console.log('e: ', e);
@@ -42,7 +45,7 @@ export const ShoppingCart = async (req,res) => {
 
 export const GetShoppingCart = async (req,res) => {
   try {
-    const { userid } = req.body;
+    const { userid,categories } = req.body;
     const carts = await ShoppingCartModel.find({});
     console.log('carts: ', carts);
 

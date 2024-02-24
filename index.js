@@ -41,6 +41,26 @@ if (!key) {
   });
 }
 
+const dir_categories = './public/categories_icon';
+const dir_avatar = './public/avatar';
+const dir_banner_notify = './public/banner_notify';
+const dir_banner_product = 'public/banner_product';
+
+if (!fs.existsSync(dir_banner_product)){
+  fs.mkdirSync(dir_banner_product,{ recursive: true });
+}
+if (!fs.existsSync(dir_categories)){
+  fs.mkdirSync(dir_categories, { recursive: true });
+};
+if (!fs.existsSync(dir_avatar)){
+  fs.mkdirSync(dir_avatar, { recursive: true });
+};
+if (!fs.existsSync(dir_banner_notify)){
+  fs.mkdirSync(dir_banner_notify, { recursive: true });
+};
+
+
+
 app.use(`${process.env.API}`,router);
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.GZFASHION_URI,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=> 

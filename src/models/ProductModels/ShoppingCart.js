@@ -28,6 +28,11 @@ const ShoppingCart = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'categories',
   },
+
+  product:{
+    type: Schema.Types.ObjectId,
+    ref: 'product',
+  }
 },{versionKey: false });
 const ShoppingCartModel = mongoose.model("shopping_cart", ShoppingCart);
 export default ShoppingCartModel;

@@ -18,7 +18,6 @@ export const currentDate = moment().unix();
 export const NewProducts = async (req, res) => {
   try {
     const fullUrl = req.files.map((ele, idx) => {
-      const url = "/images/" + ele.filename;
       return "/banner_product/" + ele.filename;
     });
 		const newCategories = await CategoriesModel({ 
