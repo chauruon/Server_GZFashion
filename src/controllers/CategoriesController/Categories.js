@@ -1,7 +1,6 @@
 import moment from "moment";
 import CryptoJS from "crypto-js";
 import CategoriesModel from "../../models/CategoriesModel/Categories.js";
-import mongoose from "mongoose";
 
 export const currentDate = moment().unix();
 
@@ -9,9 +8,9 @@ export const UpdateAndNewCategories = async (req, res) => {
   try {
     const urlIcon = typeof req.file !== "undefined" ? "/categories_icon/" + req.file.filename : "";
     const ojbImage = {
-      type: req.body.type,
-      title: req.body.title,
-      icon: urlIcon,
+      type: req.body.type ? req.body.type : '',
+      title: req.body.title ? req.body.title : "",
+      icon: typeof req.file !== "undefined" ? urlIcon : "",
       create_at: currentDate,
     };
 

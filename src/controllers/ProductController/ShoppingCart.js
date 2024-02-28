@@ -2,15 +2,16 @@ import ShoppingCartModel from "../../models/ProductModels/ShoppingCart.js"
 import ProductModel from "../../models/ProductModels/ProductModels.js";
 
 export const ShoppingCart = async (req,res) => {
-  try {
+  // try {
     const { id_product, userid  } = req.body;
     if (id_product && userid) {
-      const shoppingCartModel = await ShoppingCartModel.findById(id_product);
+      const shoppingCartModel = await ShoppingCartModel.findById(id_product).populate("product").populate("categories").populate("user");
       console.log('shoppingCartModel: ', shoppingCartModel);
       if (!shoppingCartModel?._id) {
         const cart = await ProductModel.findById(id_product).populate("categories");
+        console.log('cart: ', cart);
         const ojb = {
-          userid: userid,
+          user: userid,
           ...cart,
         };
         const newShoppingCart = await ShoppingCartModel(ojb._doc);
@@ -33,14 +34,9 @@ export const ShoppingCart = async (req,res) => {
         });
       }
     }
-  } catch (e) {
-    console.log('e: ', e);
-    res.status(409).json({ message: e.message });
-    res.status(400).json({
-      status: false,
-      message: "Vui lòng liêm hệ admin",
-    });
-  }
+  // } catch (e) {
+  //   res.status(409).json({ status: false,message: e.message });
+  // }
 }
 
 export const GetShoppingCart = async (req,res) => {

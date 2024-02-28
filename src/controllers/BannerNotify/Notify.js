@@ -2,8 +2,9 @@ import moment from "moment";
 import { Schema, SchemaTypeOptions, SchemaTypes } from "mongoose";
 import BannerNotifyModel from "../../models/NotifyModels/BannerNotify.js";
 import CryptoJS from "crypto-js";
-
-
+import {
+  categoriesImage,
+} from "../../middleware/storageImage.js"
 
 
 export const UploadBannerNotify = async (req, res) => {
@@ -92,4 +93,13 @@ export const DeleteBanners = async (req, res) => {
       message: "Vui lòng liêm hệ admin",
     });
   }
+}
+
+export const createCateByProduct = async (isfile) => {
+  console.log('isfile: ', isfile);
+  // const categories_image = multer({ storage: categoriesImage });
+
+  // console.log('req?.file: ', req?.file);
+  // const fullUrl = "/banner_notify/" + req?.file?.filename;
+
 }

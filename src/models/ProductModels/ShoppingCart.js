@@ -10,7 +10,7 @@ const ShoppingCart = mongoose.Schema({
   title:{
     type: SchemaTypes.String,
     require: true,
-    maxLength: 20,
+    maxLength: 100,
   },
   decs:{
     type: SchemaTypes.String,
@@ -28,11 +28,14 @@ const ShoppingCart = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'categories',
   },
-
   product:{
     type: Schema.Types.ObjectId,
     ref: 'product',
-  }
+  },
+  user:{
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
 },{versionKey: false });
 const ShoppingCartModel = mongoose.model("shopping_cart", ShoppingCart);
 export default ShoppingCartModel;

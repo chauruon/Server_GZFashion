@@ -5,6 +5,12 @@ import fs from "fs";
 import { TypeCategories } from "../../utils/Common.js";
 import { triggerAsyncId } from "async_hooks";
 import CategoriesModel from "../../models/CategoriesModel/Categories.js";
+import { GetCategories } from "../CategoriesController/Categories.js";
+import {
+  UploadBannerNotify,
+  createCateByProduct
+} from "../BannerNotify/Notify.js"
+
 
 
 export const currentDate = moment().unix();
@@ -13,23 +19,28 @@ export const currentDate = moment().unix();
 /**
  * Tạo mới sản phẩm
  * @param {id}
- */
-
+*/
 export const NewProducts = async (req, res) => {
-  try {
-    const fullUrl = req.files.map((ele, idx) => {
-      return "/banner_product/" + ele.filename;
+  try { 
+    const bannerFiles = req.files['banner'];
+    const thumbnailFile = bannerFiles[0];
+    const bannerUrls = bannerFiles.map((file) => {
+      return "/banner_product/" + file.filename;
     });
-		const newCategories = await CategoriesModel({ 
-      type: req.body.type,
-      title: req.body.titleCate,
+    const iconFile = req.files['icon'][0];
+    const iconUrl = "/categories_icon/" + iconFile.filename;
+
+    const newCategories = await CategoriesModel({ 
+      type: req.body.typeCate ? req.body.typeCate : "",
+      title: req.body.titleCate ? req.body.titleCate : "",
+      icon: iconUrl ? iconUrl : "",
       create_at: currentDate,
     });
     await newCategories.save();
     
     const newProducts = await ProductModel({
-      banner: fullUrl,
-      thumbnail: fullUrl[0],
+      banner: bannerUrls,
+      thumbnail: "/banner_product/" + thumbnailFile.filename,
       title: req.body.title,
       decs: req.body.decs,
       price: req.body.price,
@@ -38,21 +49,25 @@ export const NewProducts = async (req, res) => {
     });
     await newProducts.save();
     
-    if (!res.status(201)) {
-      console.log(`Save New Products error`);
-    } else res.status(201).json({
+    res.status(200).json({
       status: true,
       product: newProducts,
     });
   } catch (e) {
-    console.log("e: ", e);
-    res.status(409).json({ message: e.message });
     res.status(400).json({
       status: false,
-      message: "Vui lòng liêm hệ admin",
+      message: "Vui lòng liên hệ admin",
     });
   }
 };
+
+
+
+
+
+
+
+
 
 export const GetDetadilProducsts = async (req,res) => {
   const { id } = req.body;
@@ -82,11 +97,14 @@ export const GetAllProducsts = async (req,res) => {
 
     const totalProducts = await ProductModel.countDocuments({});
     const totalPages = Math.ceil(totalProducts / pageSize);
-
+    
     const products = await ProductModel.find({}).populate("categories").skip(skip).limit(pageSize);
-    // const products = await ProductModel.find({}).populate("categories").skip(1).limit(10);;
+
     if (!res.status(200)) {
-      console.log(`Get Producsts error`);
+      res.status(400).json({
+        status: false,
+        message: "Vui lòng liêm hệ admin",
+      });
     } else res.status(200).json({
       status: true,
       page,
@@ -95,10 +113,11 @@ export const GetAllProducsts = async (req,res) => {
       totalProducts,
       products:products,
     });
-
   } catch (e) {
-    console.log('e: ', e);
-    res.status(409).json({ message: e.message });
+    res.status(409).json({
+      status: false,
+      message: e.message
+    });
     res.status(400).json({
       status: false,
       message: "Vui lòng liêm hệ admin",
