@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "clean": "rm -rf node_modules && yarn cache clean && yarn install"
+    "clean": "rm -rf node_modules && yarn cache clean && yarn install",
+    "cache": "yarn cache clean"
   },
   "keywords": [],
   "author": "",

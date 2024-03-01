@@ -2,19 +2,19 @@ import ShoppingCartModel from "../../models/ProductModels/ShoppingCart.js"
 import ProductModel from "../../models/ProductModels/ProductModels.js";
 
 export const ShoppingCart = async (req,res) => {
-  // try {
-    const { id_product, userid  } = req.body;
-    if (id_product && userid) {
-      const shoppingCartModel = await ShoppingCartModel.findById(id_product).populate("product").populate("categories").populate("user");
-      console.log('shoppingCartModel: ', shoppingCartModel);
-      if (!shoppingCartModel?._id) {
-        const cart = await ProductModel.findById(id_product).populate("categories");
-        console.log('cart: ', cart);
+  try {
+    const { product_id, user_id  } = req.body;
+    if (product_id && user_id) {
+      const shoppingCartModel = await ShoppingCartModel.findById(product_id).populate("users").populate("categories");
+
+      if (shoppingCartModel === null) {
+        const cart = await ProductModel.findById(product_id).populate("categories");
         const ojb = {
-          user: userid,
-          ...cart,
+          users: user_id,
+          ...cart._doc,
         };
-        const newShoppingCart = await ShoppingCartModel(ojb._doc);
+
+        const newShoppingCart = await ShoppingCartModel(ojb);
         await newShoppingCart.save();
 
         if (!res.status(200)) {
@@ -30,35 +30,31 @@ export const ShoppingCart = async (req,res) => {
       }else{
         res.status(200).json({
           status: true,
-          message: "Sản phẩm đã tồn tại trong giở hàng!",
+          message: "Sản phẩm đã tồn tại trong giở hàng của bạn!",
         });
       }
     }
-  // } catch (e) {
-  //   res.status(409).json({ status: false,message: e.message });
-  // }
+  } catch (e) {
+    res.status(409).json({ status: false,message: e.message });
+  }
 }
 
 export const GetShoppingCart = async (req,res) => {
   try {
-    const { userid,categories } = req.body;
-    const carts = await ShoppingCartModel.find({});
-    console.log('carts: ', carts);
+    const { user_id } = req.body;
+    const carts = await ShoppingCartModel.find({ users:user_id}).populate("users").populate("categories");
 
     if (!res.status(200)) {
-      console.log(`Get shopping cart error`);
+      res.status(400).json({
+        status: false,
+        message: "Vui lòng liêm hệ admin",
+      });
     } else res.status(200).json({
       status: true,
       shopping_carts: carts,
     });
-
   } catch (e) {
-    console.log('e: ', e);
     res.status(409).json({ message: e.message });
-    res.status(400).json({
-      status: false,
-      message: "Vui lòng liêm hệ admin",
-    });
   }
 }
 

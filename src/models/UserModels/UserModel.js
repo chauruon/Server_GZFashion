@@ -40,12 +40,6 @@ const User = mongoose.Schema({
   uuid:{
     type: String,
   },
-  // cart_id: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'carts'
-  //   }
-  // ],
 },{ versionKey: false });
 const UserModel = mongoose.model("users", User);
 export default UserModel;

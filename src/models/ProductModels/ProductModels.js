@@ -31,7 +31,7 @@ const Product = mongoose.Schema({
   },
   price: {
     type: Number,
-    default: currentDate,
+    default: 0,
   },
   sale_off: {
     type: Number,

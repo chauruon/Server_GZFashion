@@ -5,24 +5,25 @@ const currentDate = moment().unix();
 const ShoppingCart = mongoose.Schema({
   thumbnail: {
     type: SchemaTypes.Mixed,
-    // require: true,
   },
   title:{
     type: SchemaTypes.String,
     require: true,
-    maxLength: 100,
+    maxLength: 5,
   },
   decs:{
     type: SchemaTypes.String,
-    // require: true,
   },
   banner:{
     type: SchemaTypes.Array,
-    // require: true,
   },
   create_at: {
     type: Number,
     default: currentDate,
+  },
+  users:{
+    type: Schema.Types.ObjectId,
+    ref: 'users',
   },
   categories:{
     type: Schema.Types.ObjectId,
@@ -32,9 +33,13 @@ const ShoppingCart = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'product',
   },
-  user:{
-    type: Schema.Types.ObjectId,
-    ref: 'users',
+  price: {
+    type: Number,
+    default: 0,
+  },
+  sale_off: {
+    type: Number,
+    default: 0,
   },
 },{versionKey: false });
 const ShoppingCartModel = mongoose.model("shopping_cart", ShoppingCart);
