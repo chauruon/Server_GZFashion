@@ -61,10 +61,26 @@ export const UploadBannerNotify = async (req, res) => {
 
 export const GetBannerNotify = async (req, res) => {
   try {
-    const detail = await BannerNotifyModel.findOne({});
+    const page = parseInt(req.query.page) || 1; // Get the page from the query parameters, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Set the default page size to 10, you can adjust it as needed
+
+    const skip = (page - 1) * pageSize;
+
+    const totalBanner = await BannerNotifyModel.countDocuments({});
+    const totalPages = Math.ceil(totalBanner / pageSize);
+    
+    const detail = await BannerNotifyModel.find({}).skip(skip).limit(pageSize);
+    // const detail = await BannerNotifyModel.findOne({});
     if (!res.status(201)) {
       console.log(`Get Banner Notify error`);
-    } else res.status(201).json(detail);
+    } else res.status(201).json({
+      status: true,
+      page,
+      pageSize,
+      totalPages,
+      totalBanner,
+      banner: detail
+    });
   } catch (e) {
     console.log("e: ", e);
     res.status(409).json({ message: e.message });
