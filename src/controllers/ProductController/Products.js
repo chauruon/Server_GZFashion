@@ -29,14 +29,17 @@ export const NewProducts = async (req, res) => {
     });
     const iconFile = req.files['icon'][0];
     const iconUrl = "/categories_icon/" + iconFile.filename;
-
-    const newCategories = await CategoriesModel({ 
-      type: req.body.typeCate ? req.body.typeCate : "",
-      title: req.body.titleCate ? req.body.titleCate : "",
-      icon: iconUrl ? iconUrl : "",
-      create_at: currentDate,
-    });
-    await newCategories.save();
+    const checkType = CategoriesModel.findOne({type: req.body.typeCate});
+    console.log('checkType: ', checkType);
+    if (checkType !== null) {
+      const newCategories = await CategoriesModel({ 
+        type: req.body.typeCate ? req.body.typeCate : "",
+        title: req.body.titleCate ? req.body.titleCate : "",
+        icon: iconUrl ? iconUrl : "",
+        create_at: currentDate,
+      });
+      await newCategories.save();
+    }
     
     const newProducts = await ProductModel({
       banner: bannerUrls,

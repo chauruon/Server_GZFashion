@@ -53,9 +53,22 @@ export const UpdateAndNewCategories = async (req, res) => {
 
 export const GetCategories = async (req,res) => {
 	try {
-		const categoriesArr = await CategoriesModel.find({});
+    const page = parseInt(req.query.page) || 1; // Get the page from the query parameters, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Set the default page size to 10, you can adjust it as needed
+
+    const skip = (page - 1) * pageSize;
+
+    const totalCategory = await CategoriesModel.countDocuments({});
+    const totalPages = Math.ceil(totalCategory / pageSize);
+    
+    const categoriesArr = await CategoriesModel.find({}).skip(skip).limit(pageSize);
+
 		res.status(200).json({
       status: true,
+      page,
+      pageSize,
+      totalPages,
+      totalCategory,
       categories: categoriesArr,
     });
 	} catch (e) {

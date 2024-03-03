@@ -42,7 +42,17 @@ export const ShoppingCart = async (req,res) => {
 export const GetShoppingCart = async (req,res) => {
   try {
     const { user_id } = req.body;
-    const carts = await ShoppingCartModel.find({ users:user_id}).populate("users").populate("categories");
+    const page = parseInt(req.query.page) || 1; // Get the page from the query parameters, default to 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // Set the default page size to 10, you can adjust it as needed
+
+    const skip = (page - 1) * pageSize;
+
+    const totalCart = await ShoppingCartModel.countDocuments({});
+    const totalPages = Math.ceil(totalCart / pageSize);
+    
+    // const categoriesArr = await CategoriesModel.find({}).skip(skip).limit(pageSize);
+
+    const carts = await ShoppingCartModel.find({ users:user_id}).populate("users").populate("categories").skip(skip).limit(pageSize);
 
     if (!res.status(200)) {
       res.status(400).json({
@@ -51,6 +61,10 @@ export const GetShoppingCart = async (req,res) => {
       });
     } else res.status(200).json({
       status: true,
+      page,
+      pageSize,
+      totalPages,
+      totalCart,
       shopping_carts: carts,
     });
   } catch (e) {

@@ -148,7 +148,6 @@ router.get(`/list_users`, GetUsers);
 /**
  * Products
  */
-
 router.post(`/new_product`, banner_product.fields([{
   name: 'banner', maxCount: 6
 }, {
@@ -158,18 +157,24 @@ router.get(`/product_detail`, GetDetadilProducsts);
 router.get(`/list_products`, GetAllProducsts);
 router.delete(`/delete_products`, DeleteProducts);
 
-// Shopping_carts
+/**
+ * Shopping Carts
+ */
 router.get(`/list_shopping_carts`, GetShoppingCart);
 router.post(`/shopping_cart`, ShoppingCart);
 router.delete(`/delete_shopping_carts`, DeleteShoppingCart);
 
 
-// Banner
+/***
+ * Banner
+ */
 router.post(`/up_banner_notify`, banner_notify.single('banner'), UploadBannerNotify);
-router.get(`/banner_notify`, GetBannerNotify);
+router.get(`/list_banner_notify`, GetBannerNotify);
 router.delete(`/delete_banners`, DeleteBanners);
 
-// Categories
+/**
+ * Categories
+ */
 router.post("/update_categories", categories_image.single('icon'), UpdateAndNewCategories);
 router.get("/list_categories", GetCategories);
 router.delete(`/delete_categories`, DeleteCategories);
