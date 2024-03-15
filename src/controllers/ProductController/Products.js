@@ -64,22 +64,17 @@ export const NewProducts = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
 export const GetDetadilProducsts = async (req,res) => {
   const { id } = req.body;
   try {
     const detail = await ProductModel.findById(id).populate("categories");
 
-    if (!res.status(201)) {
+    if (!res.status(200)) {
       console.log(`Get Detadil Producsts error`);
-    } else res.status(201).json(detail);
+    } else res.status(200).json({
+      status: true,
+      detail: detail,
+    });
 
   } catch (e) {
     console.log('e: ', e);

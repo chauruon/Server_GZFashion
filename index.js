@@ -45,7 +45,11 @@ const dir_categories = './public/categories_icon';
 const dir_avatar = './public/avatar';
 const dir_banner_notify = './public/banner_notify';
 const dir_banner_product = 'public/banner_product';
+const dir_cv_file = 'public/download';
 
+if (!fs.existsSync(dir_cv_file)){
+  fs.mkdirSync(dir_cv_file,{ recursive: true });
+}
 if (!fs.existsSync(dir_banner_product)){
   fs.mkdirSync(dir_banner_product,{ recursive: true });
 }

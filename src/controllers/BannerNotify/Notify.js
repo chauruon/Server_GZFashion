@@ -39,9 +39,9 @@ export const UploadBannerNotify = async (req, res) => {
 			const newBanner = await BannerNotifyModel({ banner: ojbImage });
 			await newBanner.save();
 
-			if (!res.status(201)) {
+			if (!res.status(200)) {
 				console.log(`Lưu sản phẩm không thành công`);
-			} else res.status(201).json({
+			} else res.status(200).json({
         status: true,
         banners :newBanner,
       });
@@ -71,9 +71,9 @@ export const GetBannerNotify = async (req, res) => {
     
     const detail = await BannerNotifyModel.find({}).skip(skip).limit(pageSize);
     // const detail = await BannerNotifyModel.findOne({});
-    if (!res.status(201)) {
+    if (!res.status(200)) {
       console.log(`Get Banner Notify error`);
-    } else res.status(201).json({
+    } else res.status(200).json({
       status: true,
       page,
       pageSize,

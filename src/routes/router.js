@@ -23,6 +23,7 @@ import {
   bannerNotify,
   bannerProduct,
   categoriesImage,
+  up_CV_Storage,
 } from "../middleware/storageImage.js";
 import {
   GetBannerNotify,
@@ -34,106 +35,27 @@ import {
   UpdateAndNewCategories,
   DeleteCategories,
 } from "../controllers/CategoriesController/Categories.js";
+import {
+  UpFileCV,
+  DownloadFileCV,
+  DeleteCV,
+} from '../controllers/CVController/DownloadCV.js'
 
 const router = express.Router();
 
+const upCV = multer({ storage: up_CV_Storage });
 const avatar = multer({ storage: avatarStorage });
 const banner_notify = multer({ storage: bannerNotify });
-
-
-
-
-
-
-
-
 const banner_product = multer({ storage: bannerProduct });
-
-
-
-
-
-
-
-
-
 const categories_image = multer({ storage: categoriesImage });
 
 
-const storage_image = multer.diskStorage({
-  destination: (req, file, cb) => {
-     if (file.fieldname === "profile") {
-         cb(null, './uploads/profiles/')
-     }
-     else if (file.fieldname === "natid") {
-         cb(null, './uploads/ids/');
-     }
-     else if (file.fieldname === "certificate") {
-         cb(null, './uploads/certificates/')
-     }
-  },
-  filename:(req,file,cb)=>{
-      if (file.fieldname === "profile") {
-          cb(null, file.fieldname+Date.now()+path.extname(file.originalname));
-      }
-    else if (file.fieldname === "natid") {
-      cb(null, file.fieldname+Date.now()+path.extname(file.originalname));
-    }
-    else if (file.fieldname === "certificate") {
-      cb(null, file.fieldname+Date.now()+path.extname(file.originalname));
-    }
-  }
-});
-
-const upload_image = multer({
-  storage: storage_image,
-  limits: {
-    fileSize: 1024 * 1024 * 10
-  },
-  fileFilter: (req, file, cb) => {
-    checkFileType(file, cb);
-  }
-}).fields(
-  [
-    {
-      name: 'profile',
-      maxCount: 1
-    },
-    {
-      name: 'natid', maxCount: 1
-    },
-    {
-      name: 'certificate', maxCount: 1
-    }
-  ]
-);
-
-function checkFileType(file, cb) {
-  if (file.fieldname === "certificate") {
-    if (
-      file.mimetype === 'application/pdf' ||
-      file.mimetype === 'application/msword' ||
-      file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ) { // check file type to be pdf, doc, or docx
-      cb(null, true);
-    } else {
-      cb(null, false); // else fails
-    }
-  }
-  else if (file.fieldname === "natid" || file.fieldname === "profile") {
-    if (
-      file.mimetype === 'image/png' ||
-      file.mimetype === 'image/jpg' ||
-      file.mimetype === 'image/jpeg' ||
-      fiel.mimetype === 'image/gif'
-    ) { // check file type to be png, jpeg, or jpg
-      cb(null, true);
-    } else {
-      cb(null, false); // else fails
-    }
-  }
-}
-
+/**
+ * UP CV
+ */
+router.post('/up_cv',upCV.single('cv'),UpFileCV);
+router.get('/download_cv',DownloadFileCV);
+router.post('/delete_cv',DeleteCV);
 
 
 /**

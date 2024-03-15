@@ -52,10 +52,6 @@ export const categoriesImage = multer.diskStorage({
   }
 });
 
-
-
-
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
      if (file.fieldname === "profile") {
@@ -80,3 +76,15 @@ const storage = multer.diskStorage({
     }
   }
 });
+
+export const up_CV_Storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/download')
+  },
+  filename: function (req, file, cb) {
+    const nameFile = file.originalname.split('.')[0];
+    const typeFile = file.originalname.split('.')[1];
+    cb(null, `${file.fieldname.toUpperCase()}_${nameFile}-${Date.now()}.${typeFile}`)
+  }
+});
+

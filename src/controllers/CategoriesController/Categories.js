@@ -31,8 +31,8 @@ export const UpdateAndNewCategories = async (req, res) => {
     }else{
       const newCategories = await CategoriesModel( ojbImage);
         await newCategories.save();
-      if (!res.status(201)) {
-      } else res.status(201).json({
+      if (!res.status(200)) {
+      } else res.status(200).json({
         status: true,
         message: "Thể loại sản phẩm đã tạo thành công!",
         categories: newCategories,

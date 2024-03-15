@@ -50,11 +50,11 @@ export const LoginUser = async (req, res) => {
     const loginUser = await UserModel.findOne({username : username})
     const hashPass = CryptoJS.AES.decrypt(loginUser.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
 
-    if (!res.status(201)) {
+    if (!res.status(200)) {
       console.log(`RegisterUser error`);
     }
     if (hashPass === password) {
-      res.status(201).json({
+      res.status(200).json({
         status: true,
         user:{
           accessToken,
@@ -62,7 +62,7 @@ export const LoginUser = async (req, res) => {
         }
       });
     }else{
-      res.status(201).json({
+      res.status(200).json({
         status: false,
         message:"Vui lòng kiểm tra tài khoản hoặc mật khẩu!",
       });
