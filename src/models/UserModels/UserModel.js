@@ -1,44 +1,45 @@
-import mongoose from "mongoose";
+import mongoose,{SchemaTypes} from "mongoose";
 import moment from "moment";
 const currentDate = moment().unix();
 
 const User = mongoose.Schema({
   username: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
     trim: true,
   },
   password: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
   },
   name: {
-    type: String,
+    type: SchemaTypes.String,
     require: true,
     trim: true,
   },
   avatar: {
-    type: String,
+    type: SchemaTypes.String,
     default: "",
   },
-  isAdmin: {
-    type: Boolean,
+  is_admin: {
+    type: SchemaTypes.Boolean,
   },
   create_at: {
-    type: Number,
+    type: SchemaTypes.Number,
     default: currentDate,
   },
   address: {
-    type: String,
+    type: SchemaTypes.String,
+    required: true,
   },
   num_phone: {
-    type: Number,
+    type: SchemaTypes.Number,
     required: true,
     minLength: 9,
     maxLength: 13,
   },
   uuid:{
-    type: String,
+    type: SchemaTypes.String,
   },
 },{ versionKey: false });
 const UserModel = mongoose.model("users", User);

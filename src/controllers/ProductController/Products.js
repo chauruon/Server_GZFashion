@@ -10,6 +10,9 @@ import {
   UploadBannerNotify,
   createCateByProduct
 } from "../BannerNotify/Notify.js"
+import {
+  verifyRefreshToken,
+} from "../../middleware/generate_token.js"
 
 
 
@@ -97,6 +100,14 @@ export const GetAllProducsts = async (req,res) => {
     const totalPages = Math.ceil(totalProducts / pageSize);
     
     const products = await ProductModel.find({}).populate("categories").skip(skip).limit(pageSize);
+    const token = req.headers.authorization.split(" ")[1]
+    console.log('req.headers.authorization: ', );
+    // console.log('req.header: ', req);
+
+    const verify = verifyRefreshToken(token);
+    console.log('verify: ', verify);
+
+
 
     if (!res.status(200)) {
       res.status(400).json({

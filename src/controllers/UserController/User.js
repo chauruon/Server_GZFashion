@@ -2,20 +2,24 @@ import UserModel from "../../models/UserModels/UserModel.js";
 import CryptoJS from "crypto-js";
 import Jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';
+import {encryptHex,decryptHex} from "./hashpass.js"
+import { verifyRefreshToken } from "../../middleware/generate_token.js"
+
 
 export const RegisterUser = async (req, res) => {
-  const{num_phone, username,password, address} = req.body;
-  // const uuidv4 = uuidv4();
-  // console.log('saf: ', saf);
+  const{num_phone, username,password, address, is_admin} = req.body;
+  const passwordHex = encryptHex(password);
+
   const newPost = new UserModel({
-    num_phone : num_phone,
+    num_phone : num_phone !== undefined ? num_phone : 0,
     username : username,
-    is_admin : false,
-    password : CryptoJS.AES.encrypt(password,process.env.ACCESS_SECRET).toString(),
-    address : address,
+    is_admin : is_admin ? is_admin : false,
+    password : passwordHex,
+    address: address !== undefined ? address : " ",
     uuid: uuidv4(),
   });
-  const duplicateUser = await UserModel.findOne({username : username})
+  const duplicateUser = await UserModel.findOne({username: username})
+  
   try {
     if (!duplicateUser) {
       await newPost.save();
@@ -26,7 +30,7 @@ export const RegisterUser = async (req, res) => {
     }else{
       res.status(400).json({
         status: false,
-        message:"Duplicate user!",
+        message:"Tài khoản đã tồn tại!",
       });
     }
   
@@ -34,7 +38,7 @@ export const RegisterUser = async (req, res) => {
       console.log(`RegisterUser error`);
     }
   } catch (e) {
-    console.log("🚀 ~ file: User.js:7 ~ RegisterUser ~ error", e)
+    // console.log("🚀 ~ file: User.js:7 ~ RegisterUser ~ error", e)
     res.status(409).json({message: e.message})
     res.status(400).json({
       status: false,
@@ -46,18 +50,18 @@ export const RegisterUser = async (req, res) => {
 export const LoginUser = async (req, res) => {
   const{username,password} = req.body;
   try {
-    const accessToken = Jwt.sign({id: UserModel._id},process.env.ACCESS_SECRET_TOKEN,{expiresIn:"3d"});
+    const access_token = Jwt.sign({id: UserModel._id},process.env.ACCESS_SECRET_TOKEN,{expiresIn:"3d"});
     const loginUser = await UserModel.findOne({username : username})
-    const hashPass = CryptoJS.AES.decrypt(loginUser.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
+    const hashPass = decryptHex(loginUser.password);
 
     if (!res.status(200)) {
-      console.log(`RegisterUser error`);
+      res.status(409).json({status: false, message: e.message});
     }
     if (hashPass === password) {
       res.status(200).json({
         status: true,
         user:{
-          accessToken,
+          access_token,
           ...loginUser._doc
         }
       });
@@ -83,9 +87,9 @@ export const UpdateUser = async (req, res) => {
     const update = await UserModel.findByIdAndUpdate(req.query.id, {$set: {
       username: req.body.username,
       password: req.body.password,
-      name: req.body.name,
-      address: req.body.address,
-      numPhone: req.body.numPhone,
+      name: (typeof req.body.name !== "undefined") ? req.body.name : "",
+      address: (typeof req.body.address !== "undefined") ? req.body.address : "",
+      num_phone:  (typeof req.body.num_phone !== "undefined") ? req.body.num_phone : "",
       avatar: fullUrl
     }},{new:true});
 
@@ -103,7 +107,7 @@ export const UpdateUser = async (req, res) => {
     }
   } catch (e) {
     console.log('error: ', e);
-    res.status(409).json({message: e.message})
+    res.status(409).json({message: e.message});
     res.status(400).json({
       status: false,
       message:"Vui lòng liêm hệ admin",

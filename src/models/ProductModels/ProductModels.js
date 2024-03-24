@@ -1,4 +1,4 @@
-import mongoose, { Schema, SchemaType, SchemaTypes } from "mongoose";
+import mongoose, { Schema, SchemaTypes } from "mongoose";
 import moment from 'moment';
 const currentDate = moment().unix();
 import { TypeCategories } from "../../utils/Common.js";
@@ -22,7 +22,7 @@ const Product = mongoose.Schema({
     require: true,
   },
   create_at: {
-    type: Number,
+    type: SchemaTypes.Number,
     default: currentDate,
   },
   categories:{
