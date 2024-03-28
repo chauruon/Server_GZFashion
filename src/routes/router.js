@@ -41,6 +41,7 @@ import {
   DeleteCV,
 } from '../controllers/CVController/DownloadCV.js'
 
+
 const router = express.Router();
 
 const upCV = multer({ storage: up_CV_Storage });
@@ -78,6 +79,16 @@ router.post(`/new_product`, banner_product.fields([{
 router.get(`/product_detail`, GetDetadilProducsts);
 router.get(`/list_products`, GetAllProducsts);
 router.delete(`/delete_products`, DeleteProducts);
+
+
+/**
+ * Generate Token
+ */
+// router.post("/gen_token",GenToken);
+// router.get("/veryfi_token",authenticateToken,VeryfiToken);
+// router.get("/veryfi_token",VeryfiToken);
+// });
+
 
 /**
  * Shopping Carts
